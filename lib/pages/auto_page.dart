@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,6 +17,7 @@ class _AutoPageState extends State<AutoPage> {
   int _highHits = 0;
   int _lowMisses = 0;
   int _highMisses = 0;
+  bool _taxi = false;
 
   void _updateData(int value, String label, bool direction) {
     final bool allowed;
@@ -55,19 +54,21 @@ class _AutoPageState extends State<AutoPage> {
   Future _getData() async {
     final preferences = await SharedPreferences.getInstance();
     setState(() {
-      _lowHits = preferences.getInt("autoLowHits") ?? 0;
-      _highHits = preferences.getInt("autoHighHits") ?? 0;
-      _lowMisses = preferences.getInt("autoLowMisses") ?? 0;
-      _highMisses = preferences.getInt("autoHighMisses") ?? 0;
+      _taxi = preferences.getBool("Taxi") ?? false;
+      _lowHits = preferences.getInt("Auto Low Goal Scored") ?? 0;
+      _highHits = preferences.getInt("Auto High Goal Scored") ?? 0;
+      _lowMisses = preferences.getInt("Auto Low Goal Miss") ?? 0;
+      _highMisses = preferences.getInt("Auto High Goal Miss") ?? 0;
     });
   }
 
   Future _saveData() async {
     final preferences = await SharedPreferences.getInstance();
-    await preferences.setInt("autoLowHits", _lowHits);
-    await preferences.setInt("autoHighHits", _highHits);
-    await preferences.setInt("autoLowMisses", _lowMisses);
-    await preferences.setInt("autoHighMisses", _highMisses);
+    await preferences.setBool("Taxi", _taxi);
+    await preferences.setInt("Auto Low Goal Scored", _lowHits);
+    await preferences.setInt("Auto High Goal Scored", _highHits);
+    await preferences.setInt("Auto Low Goal Miss", _lowMisses);
+    await preferences.setInt("Auto High Goal Miss", _highMisses);
   }
 
   @override
@@ -86,14 +87,26 @@ class _AutoPageState extends State<AutoPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
+        const Padding(
+          padding: EdgeInsets.all(8.0),
           child: Text(
-            "Auto Placeholder",
+            "Auto",
             style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,
             ),
+          ),
+        ),
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 125),
+          child: CheckboxListTile(
+            value: _taxi,
+            title: const Text("Taxi"),
+            onChanged: (value) {
+              setState(() {
+                _taxi = !_taxi;
+              });
+            },
           ),
         ),
         Row(children: [

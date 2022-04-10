@@ -1,7 +1,10 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
 import 'package:flutter/material.dart';
+import 'package:scouting_test/pages/qr_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../utils/custom_radio_button.dart';
+
+enum Station { r1, r2, r3, b1, b2, b3 }
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,18 +15,23 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _teamNameController = TextEditingController();
+  final _scoutNameController = TextEditingController();
+  Station _station = Station.b1;
 
   Future _getData() async {
     final preferences = await SharedPreferences.getInstance();
-    final String? teamName = preferences.getString("teamName");
     setState(() {
-      _teamNameController.text = teamName!;
+      _teamNameController.text = preferences.getString("Team") ?? "";
+      _scoutNameController.text = preferences.getString("scoutName") ?? "";
+      _station = Station.values[preferences.getInt("station") ?? 0];
     });
   }
 
   Future _saveData() async {
     final preferences = await SharedPreferences.getInstance();
-    await preferences.setString("teamName", _teamNameController.text);
+    await preferences.setString("Team", _teamNameController.text);
+    await preferences.setString("scoutName", _scoutNameController.text);
+    await preferences.setInt("station", _station.index);
   }
 
   @override
@@ -33,55 +41,139 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void dispose() {
+    _saveData();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: Column(
+      child: ListView(
         children: [
-          const Text(
-            "Home Placeholder",
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
+          const Center(
+            child: Text(
+              "Main",
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           const SizedBox(height: 10),
-          Row(
-            children: [
-              Container(
-                padding: EdgeInsets.only(right: 10),
-                color: Colors.red,
-                child: Row(
-                  children: [
-                    Checkbox(
-                      value: false,
-                      onChanged: null,
-                    ),
-                    Text(
-                      "Red Label",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ],
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: [
+                TextField(
+                  controller: _scoutNameController,
+                  decoration: const InputDecoration(labelText: "Scout Name"),
                 ),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Text(
-                "D. Joe",
-                style: TextStyle(fontSize: 20),
-              ),
-            ],
+                TextField(
+                  controller: _teamNameController,
+                  decoration: const InputDecoration(
+                    labelText: "Team Number",
+                  ),
+                ),
+              ],
+            ),
           ),
-          SizedBox(height: 20),
-          Text("Insert Team Details"),
-          TextField(
-            controller: _teamNameController,
-            decoration: InputDecoration(labelText: "Team Number"),
+          const SizedBox(
+            height: 20,
           ),
-          TextButton(
-            onPressed: _saveData,
-            child: Text("Save Data"),
+          const Center(
+            child: Text(
+              "Station",
+              style: TextStyle(
+                fontSize: 22,
+              ),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              color: Colors.blue[300],
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              children: [
+                Row(children: [
+                  CustomRadioButton(
+                      text: "R1",
+                      groupValue: _station,
+                      value: Station.r1,
+                      onChanged: (Station value) {
+                        setState(() {
+                          _station = value;
+                        });
+                      }),
+                  CustomRadioButton(
+                      text: "R2",
+                      groupValue: _station,
+                      value: Station.r2,
+                      onChanged: (Station value) {
+                        setState(() {
+                          _station = value;
+                        });
+                      }),
+                  CustomRadioButton(
+                      text: "R3",
+                      groupValue: _station,
+                      value: Station.r3,
+                      onChanged: (Station value) {
+                        setState(() {
+                          _station = value;
+                        });
+                      }),
+                ]),
+                Row(children: [
+                  CustomRadioButton(
+                      text: "B1",
+                      groupValue: _station,
+                      value: Station.b1,
+                      onChanged: (Station value) {
+                        setState(() {
+                          _station = value;
+                        });
+                      }),
+                  CustomRadioButton(
+                      text: "B2",
+                      groupValue: _station,
+                      value: Station.b2,
+                      onChanged: (Station value) {
+                        setState(() {
+                          _station = value;
+                        });
+                      }),
+                  CustomRadioButton(
+                      text: "B3",
+                      groupValue: _station,
+                      value: Station.b3,
+                      onChanged: (Station value) {
+                        setState(() {
+                          _station = value;
+                        });
+                      }),
+                ]),
+              ],
+            ),
+          ),
+          const SizedBox(height: 30),
+          ElevatedButton(
+            onPressed: () {
+              _saveData();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const QRPage()),
+              );
+            },
+            child: const Text(
+              "Generate QR Code",
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
           ),
         ],
       ),

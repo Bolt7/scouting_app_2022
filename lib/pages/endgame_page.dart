@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
 import 'package:scouting_test/utils/custom_radio_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,8 +14,36 @@ class EndgamePage extends StatefulWidget {
 }
 
 class _EndgamePageState extends State<EndgamePage> {
+  Try _try = Try.none;
+  Rung _rung = Rung.low;
+  Speed _speed = Speed.slow;
+
+  void _updateTry(Try? value) {
+    setState(
+      () {
+        _try = value!;
+      },
+    );
+  }
+
+  void _updateRung(Rung? value) {
+    setState(
+      () {
+        _rung = value!;
+      },
+    );
+  }
+
+  void _updateSpeed(Speed? value) {
+    setState(
+      () {
+        _speed = value!;
+      },
+    );
+  }
+
   // Data Management
-  void _getData() async {
+  Future _getData() async {
     final preferences = await SharedPreferences.getInstance();
     setState(() {
       _try = Try.values[preferences.getInt("try") ?? 0];
@@ -26,38 +52,32 @@ class _EndgamePageState extends State<EndgamePage> {
     });
   }
 
-  Try _try = Try.none;
-  Rung _rung = Rung.low;
-  Speed _speed = Speed.slow;
-
-  void _updateTry(Try? value) async {
-    setState(
-      () {
-        _try = value!;
-      },
-    );
+  Future _saveData() async {
     final preferences = await SharedPreferences.getInstance();
-    await preferences.setInt("try", _try.index);
-  }
+    preferences.setInt("try", _try.index);
+    preferences.setInt("rung", _rung.index);
+    preferences.setInt("speed", _speed.index);
 
-  void _updateRung(Rung? value) async {
-    setState(
-      () {
-        _rung = value!;
-      },
-    );
-    final preferences = await SharedPreferences.getInstance();
-    await preferences.setInt("rung", _rung.index);
-  }
+    preferences.setBool("Low Rung Success", false);
+    preferences.setBool("Mid Rung Success", false);
+    preferences.setBool("High Rung Success", false);
+    preferences.setBool("Traversal Rung Success", false);
 
-  void _updateSpeed(Speed? value) async {
-    setState(
-      () {
-        _speed = value!;
-      },
-    );
-    final preferences = await SharedPreferences.getInstance();
-    await preferences.setInt("speed", _speed.index);
+    if (_try == Try.success) {
+      switch (_rung) {
+        case Rung.low:
+          preferences.setBool("Low Rung Success", true);
+          break;
+        case Rung.mid:
+          preferences.setBool("Mid Rung Success", true);
+          break;
+        case Rung.high:
+          preferences.setBool("High Rung Success", true);
+          break;
+        case Rung.traversal:
+          preferences.setBool("Traversal Rung Success", true);
+      }
+    }
   }
 
   @override
@@ -67,13 +87,19 @@ class _EndgamePageState extends State<EndgamePage> {
   }
 
   @override
+  void dispose() {
+    _saveData();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
+        const Padding(
+          padding: EdgeInsets.all(8.0),
           child: Text(
-            "Endgame Placeholder",
+            "Endgame",
             style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,
@@ -83,7 +109,7 @@ class _EndgamePageState extends State<EndgamePage> {
 
         // Try Radio Buttons
         Container(
-          margin: EdgeInsets.all(5),
+          margin: const EdgeInsets.all(5),
           decoration: BoxDecoration(
             color: Colors.blue[300],
             borderRadius: BorderRadius.circular(10),
@@ -115,7 +141,7 @@ class _EndgamePageState extends State<EndgamePage> {
 
         // Rung Radio Buttons
         Container(
-          margin: EdgeInsets.all(5),
+          margin: const EdgeInsets.all(5),
           decoration: BoxDecoration(
             color: Colors.blue[300],
             borderRadius: BorderRadius.circular(10),
@@ -162,7 +188,7 @@ class _EndgamePageState extends State<EndgamePage> {
 
         // Speed Radio Buttons
         Container(
-          margin: EdgeInsets.all(5),
+          margin: const EdgeInsets.all(5),
           decoration: BoxDecoration(
             color: Colors.blue[300],
             borderRadius: BorderRadius.circular(10),

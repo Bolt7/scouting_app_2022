@@ -5,8 +5,6 @@
 
 import 'package:flutter/material.dart';
 
-import 'numeric_step_button.dart';
-
 class CounterTile extends StatelessWidget {
   final String label;
   final double scaleFactor;

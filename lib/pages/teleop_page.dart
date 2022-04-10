@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,8 +14,8 @@ class _TeleopPageState extends State<TeleopPage> {
   static const int _numberMax = 10;
   static const int _numberMin = 0;
 
-  int _fowls = 0;
-  int _techFowls = 0;
+  int _fouls = 0;
+  int _techFouls = 0;
   int _lowHits = 0;
   int _highHits = 0;
   int _lowMisses = 0;
@@ -39,11 +37,11 @@ class _TeleopPageState extends State<TeleopPage> {
 
     setState(() {
       switch (label) {
-        case "Fowl":
-          _fowls = newValue;
+        case "Foul":
+          _fouls = newValue;
           break;
-        case "Tech Fowl":
-          _techFowls = newValue;
+        case "Tech Foul":
+          _techFouls = newValue;
           break;
         case "Low Hit":
           _lowHits = newValue;
@@ -64,23 +62,23 @@ class _TeleopPageState extends State<TeleopPage> {
   Future _getData() async {
     final preferences = await SharedPreferences.getInstance();
     setState(() {
-      _fowls = preferences.getInt("fowls") ?? 0;
-      _techFowls = preferences.getInt("techFowls") ?? 0;
-      _lowHits = preferences.getInt("lowHits") ?? 0;
-      _highHits = preferences.getInt("highHits") ?? 0;
-      _lowMisses = preferences.getInt("lowMisses") ?? 0;
-      _highMisses = preferences.getInt("highMisses") ?? 0;
+      _fouls = preferences.getInt("Foul") ?? 0;
+      _techFouls = preferences.getInt("Tech Foul") ?? 0;
+      _lowHits = preferences.getInt("Teleop Low Goal Scored") ?? 0;
+      _highHits = preferences.getInt("Teleop High Goal Scored") ?? 0;
+      _lowMisses = preferences.getInt("Teleop Low Goal Miss") ?? 0;
+      _highMisses = preferences.getInt("Teleop High Goal Miss") ?? 0;
     });
   }
 
   Future _saveData() async {
     final preferences = await SharedPreferences.getInstance();
-    await preferences.setInt("fowls", _fowls);
-    await preferences.setInt("techFowls", _techFowls);
-    await preferences.setInt("lowHits", _lowHits);
-    await preferences.setInt("highHits", _highHits);
-    await preferences.setInt("lowMisses", _lowMisses);
-    await preferences.setInt("highMisses", _highMisses);
+    await preferences.setInt("Foul", _fouls);
+    await preferences.setInt("Tech Foul", _techFouls);
+    await preferences.setInt("Teleop Low Goal Scored", _lowHits);
+    await preferences.setInt("Teleop High Goal Scored", _highHits);
+    await preferences.setInt("Teleop Low Goal Miss", _lowMisses);
+    await preferences.setInt("Teleop High Goal Miss", _highMisses);
   }
 
   @override
@@ -99,10 +97,10 @@ class _TeleopPageState extends State<TeleopPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
+        const Padding(
+          padding: EdgeInsets.all(8.0),
           child: Text(
-            "Teleop Placeholder",
+            "Teleop",
             style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,
@@ -111,23 +109,23 @@ class _TeleopPageState extends State<TeleopPage> {
         ),
         Row(children: [
           CounterTile(
-            label: "Fowl",
-            value: _fowls,
+            label: "Foul",
+            value: _fouls,
             onIncrease: (value) {
-              _updateData(value, "Fowl", true);
+              _updateData(value, "Foul", true);
             },
             onDecrease: (value) {
-              _updateData(value, "Fowl", false);
+              _updateData(value, "Foul", false);
             },
           ),
           CounterTile(
-            label: "Tech Fowl",
-            value: _techFowls,
+            label: "Tech Foul",
+            value: _techFouls,
             onIncrease: (value) {
-              _updateData(value, "Tech Fowl", true);
+              _updateData(value, "Tech Foul", true);
             },
             onDecrease: (value) {
-              _updateData(value, "Tech Fowl", false);
+              _updateData(value, "Tech Foul", false);
             },
           ),
         ]),

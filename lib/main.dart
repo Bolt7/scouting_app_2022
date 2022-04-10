@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_test/pages/auto_page.dart';
+import 'package:scouting_test/pages/comment_page.dart';
 import 'package:scouting_test/pages/endgame_page.dart';
 import 'package:scouting_test/pages/home_page.dart';
 import 'package:scouting_test/pages/teleop_page.dart';
@@ -39,6 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
     AutoPage(),
     TeleopPage(),
     EndgamePage(),
+    CommentPage()
   ];
   void _onNavigationItemTapped(int index) {
     setState(() {
@@ -62,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: "Home",
+            label: "Main",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.computer),
@@ -75,6 +77,10 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.timer),
             label: "Endgame",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.info),
+            label: "Info",
           ),
         ],
       ),
