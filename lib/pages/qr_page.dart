@@ -79,7 +79,8 @@ class _QRPageState extends State<QRPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
+      body: ListView(
+        scrollDirection: Axis.vertical,
         children: [
           QrImage(data: data),
           Padding(
@@ -90,7 +91,7 @@ class _QRPageState extends State<QRPage> {
             child: Text(
               data,
               style: const TextStyle(
-                fontSize: 16,
+                fontSize: 14,
                 color: Colors.grey,
               ),
             ),
