@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scouting_test/utils/custom_toggle_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/counter_tile.dart';
@@ -35,16 +36,16 @@ class _AutoPageState extends State<AutoPage> {
 
     setState(() {
       switch (label) {
-        case "Auto Low Hit":
+        case "Low Hit":
           _lowHits = newValue;
           break;
-        case "Auto High Hit":
+        case "High Hit":
           _highHits = newValue;
           break;
-        case "Auto Low Miss":
+        case "Low Miss":
           _lowMisses = newValue;
           break;
-        case "Auto High Miss":
+        case "High Miss":
           _highMisses = newValue;
           break;
       }
@@ -97,60 +98,98 @@ class _AutoPageState extends State<AutoPage> {
             ),
           ),
         ),
-        ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 125),
-          child: CheckboxListTile(
-            value: _taxi,
-            title: const Text("Taxi"),
-            onChanged: (value) {
-              setState(() {
-                _taxi = !_taxi;
-              });
-            },
-          ),
+        const SizedBox(height: 20),
+        CustomToggleButton(
+          text: "Taxi Used",
+          value: _taxi,
+          onPressed: () => setState(() {
+            _taxi = !_taxi;
+          }),
         ),
         Row(children: [
-          CounterTile(
-            label: "Auto Low Hit",
-            value: _lowHits,
-            onIncrease: (value) {
-              _updateData(value, "Auto Low Hit", true);
-            },
-            onDecrease: (value) {
-              _updateData(value, "Auto Low Hit", false);
-            },
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.blue[200],
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                children: [
+                  const Text(
+                    "Low Goal",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  CounterTile(
+                    label: "Scored",
+                    value: _lowHits,
+                    onIncrease: (value) {
+                      _updateData(value, "Low Hit", true);
+                    },
+                    onDecrease: (value) {
+                      _updateData(value, "Low Hit", false);
+                    },
+                  ),
+                  CounterTile(
+                    label: "Missed",
+                    value: _lowMisses,
+                    onIncrease: (value) {
+                      _updateData(value, "Low Miss", true);
+                    },
+                    onDecrease: (value) {
+                      _updateData(value, "Low Miss", false);
+                    },
+                  ),
+                ],
+              ),
+            ),
           ),
-          CounterTile(
-            label: "Auto High Hit",
-            value: _highHits,
-            onIncrease: (value) async {
-              _updateData(value, "Auto High Hit", true);
-            },
-            onDecrease: (value) async {
-              _updateData(value, "Auto High Hit", false);
-            },
-          ),
-        ]),
-        Row(children: [
-          CounterTile(
-            label: "Auto Low Miss",
-            value: _lowMisses,
-            onIncrease: (value) {
-              _updateData(value, "Auto Low Miss", true);
-            },
-            onDecrease: (value) {
-              _updateData(value, "Auto Low Miss", false);
-            },
-          ),
-          CounterTile(
-            label: "Auto High Miss",
-            value: _highMisses,
-            onIncrease: (value) {
-              _updateData(value, "Auto High Miss", true);
-            },
-            onDecrease: (value) {
-              _updateData(value, "Auto High Miss", false);
-            },
+          Expanded(
+            child: Container(
+              margin: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.blue[200],
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                children: [
+                  const Text(
+                    "High Goal",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  CounterTile(
+                    label: "Scored",
+                    value: _highHits,
+                    onIncrease: (value) async {
+                      _updateData(value, "High Hit", true);
+                    },
+                    onDecrease: (value) async {
+                      _updateData(value, "High Hit", false);
+                    },
+                  ),
+                  CounterTile(
+                    label: "Missed",
+                    value: _highMisses,
+                    onIncrease: (value) {
+                      _updateData(value, "High Miss", true);
+                    },
+                    onDecrease: (value) {
+                      _updateData(value, "High Miss", false);
+                    },
+                  ),
+                ],
+              ),
+            ),
           ),
         ]),
       ],

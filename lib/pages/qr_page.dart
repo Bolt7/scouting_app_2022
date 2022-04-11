@@ -83,7 +83,10 @@ class _QRPageState extends State<QRPage> {
         children: [
           QrImage(data: data),
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 5,
+            ),
             child: Text(
               data,
               style: const TextStyle(
@@ -91,6 +94,13 @@ class _QRPageState extends State<QRPage> {
                 color: Colors.grey,
               ),
             ),
+          ),
+          TextButton(
+            child: const Text("Reset Data"),
+            onPressed: () {
+              // ignore: invalid_use_of_visible_for_testing_member
+              SharedPreferences.setMockInitialValues({});
+            },
           )
         ],
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scouting_test/utils/custom_toggle_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CommentPage extends StatefulWidget {
@@ -65,45 +66,31 @@ class _CommentPageState extends State<CommentPage> {
               ),
             ),
           ),
-          const SizedBox(
-            height: 20,
-          ),
-          CheckboxListTile(
+          const SizedBox(height: 20),
+          CustomToggleButton(
+            text: "Robot Disabled",
             value: _disabled,
-            title: const Text("Robot Disabled"),
-            onChanged: (value) {
-              setState(() {
-                _disabled = !_disabled;
-              });
-            },
+            onPressed: () => setState(() => _disabled = !_disabled),
           ),
-          CheckboxListTile(
+          const SizedBox(height: 10),
+          CustomToggleButton(
+            text: "Robot Incapacitated",
             value: _incapacitated,
-            title: const Text("Robot Incapacitated"),
-            onChanged: (value) {
-              setState(() {
-                _incapacitated = !_incapacitated;
-              });
-            },
+            onPressed: () => setState(() => _incapacitated = !_incapacitated),
           ),
-          CheckboxListTile(
+          const SizedBox(height: 10),
+          CustomToggleButton(
+            text: "Entry Started late",
             value: _late,
-            title: const Text("Entry Started late"),
-            onChanged: (value) {
-              setState(() {
-                _late = !_late;
-              });
-            },
+            onPressed: () => setState(() => _late = !_late),
           ),
-          CheckboxListTile(
+          const SizedBox(height: 10),
+          CustomToggleButton(
+            text: "Scout Required",
             value: _scoutRequired,
-            title: const Text("Scout Required"),
-            onChanged: (value) {
-              setState(() {
-                _scoutRequired = !_scoutRequired;
-              });
-            },
+            onPressed: () => setState(() => _scoutRequired = !_scoutRequired),
           ),
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.all(10),
             child: Column(

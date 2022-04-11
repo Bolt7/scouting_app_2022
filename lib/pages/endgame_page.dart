@@ -53,6 +53,8 @@ class _EndgamePageState extends State<EndgamePage> {
   }
 
   Future _saveData() async {
+    // static const
+
     final preferences = await SharedPreferences.getInstance();
     preferences.setInt("try", _try.index);
     preferences.setInt("rung", _rung.index);
@@ -106,12 +108,14 @@ class _EndgamePageState extends State<EndgamePage> {
             ),
           ),
         ),
+        const SizedBox(height: 10),
 
         // Try Radio Buttons
         Container(
-          margin: const EdgeInsets.all(5),
+          margin: const EdgeInsets.all(10),
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 9),
           decoration: BoxDecoration(
-            color: Colors.blue[300],
+            color: Colors.blue[200],
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
@@ -141,81 +145,75 @@ class _EndgamePageState extends State<EndgamePage> {
 
         // Rung Radio Buttons
         Container(
-          margin: const EdgeInsets.all(5),
+          margin: const EdgeInsets.all(10),
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 9),
           decoration: BoxDecoration(
-            color: Colors.blue[300],
+            color: Colors.blue[200],
             borderRadius: BorderRadius.circular(10),
           ),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  CustomRadioButton(
-                    text: "Low Rung",
-                    value: Rung.low,
-                    groupValue: _rung,
-                    onChanged: _updateRung,
-                  ),
-                  CustomRadioButton(
-                    text: "Mid Rung",
-                    value: Rung.mid,
-                    groupValue: _rung,
-                    onChanged: _updateRung,
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  CustomRadioButton(
-                    text: "High Rung",
-                    value: Rung.high,
-                    groupValue: _rung,
-                    onChanged: _updateRung,
-                  ),
-                  CustomRadioButton(
-                    text: "Traversal Rung",
-                    value: Rung.traversal,
-                    groupValue: _rung,
-                    onChanged: _updateRung,
-                  ),
-                ],
-              )
+              Row(children: [
+                CustomRadioButton(
+                  text: "Low Rung",
+                  value: Rung.low,
+                  groupValue: _rung,
+                  onChanged: _updateRung,
+                ),
+                CustomRadioButton(
+                  text: "Mid Rung",
+                  value: Rung.mid,
+                  groupValue: _rung,
+                  onChanged: _updateRung,
+                ),
+              ]),
+              const SizedBox(height: 10),
+              Row(children: [
+                CustomRadioButton(
+                  text: "High Rung",
+                  value: Rung.high,
+                  groupValue: _rung,
+                  onChanged: _updateRung,
+                ),
+                CustomRadioButton(
+                  text: "Traversal Rung",
+                  value: Rung.traversal,
+                  groupValue: _rung,
+                  onChanged: _updateRung,
+                ),
+              ])
             ],
           ),
         ),
 
         // Speed Radio Buttons
         Container(
-          margin: const EdgeInsets.all(5),
+          margin: const EdgeInsets.all(10),
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 9),
           decoration: BoxDecoration(
-            color: Colors.blue[300],
+            color: Colors.blue[200],
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              CustomRadioButton(
-                text: "Slow",
-                value: Speed.slow,
-                groupValue: _speed,
-                onChanged: _updateSpeed,
-              ),
-              CustomRadioButton(
-                text: "Medium",
-                value: Speed.medium,
-                groupValue: _speed,
-                onChanged: _updateSpeed,
-              ),
-              CustomRadioButton(
-                text: "Fast",
-                value: Speed.fast,
-                groupValue: _speed,
-                onChanged: _updateSpeed,
-              ),
-            ],
-          ),
+          child: Row(children: [
+            CustomRadioButton(
+              text: "Slow",
+              value: Speed.slow,
+              groupValue: _speed,
+              onChanged: _updateSpeed,
+            ),
+            CustomRadioButton(
+              text: "Medium",
+              value: Speed.medium,
+              groupValue: _speed,
+              onChanged: _updateSpeed,
+            ),
+            CustomRadioButton(
+              text: "Fast",
+              value: Speed.fast,
+              groupValue: _speed,
+              onChanged: _updateSpeed,
+            ),
+          ]),
         ),
       ],
     );

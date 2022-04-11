@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.all(10),
             child: Column(
@@ -91,16 +91,17 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Container(
-            margin: const EdgeInsets.all(5),
+            margin: const EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 9),
             decoration: BoxDecoration(
-              color: Colors.blue[300],
+              color: Colors.blue[200],
               borderRadius: BorderRadius.circular(10),
             ),
             child: Column(
               children: [
                 Row(children: [
                   CustomRadioButton(
-                      text: "R1",
+                      text: "Red 1",
                       groupValue: _station,
                       value: Station.r1,
                       onChanged: (Station value) {
@@ -109,7 +110,7 @@ class _HomePageState extends State<HomePage> {
                         });
                       }),
                   CustomRadioButton(
-                      text: "R2",
+                      text: "Red 2",
                       groupValue: _station,
                       value: Station.r2,
                       onChanged: (Station value) {
@@ -118,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                         });
                       }),
                   CustomRadioButton(
-                      text: "R3",
+                      text: "Red 3",
                       groupValue: _station,
                       value: Station.r3,
                       onChanged: (Station value) {
@@ -127,9 +128,10 @@ class _HomePageState extends State<HomePage> {
                         });
                       }),
                 ]),
+                const SizedBox(height: 10),
                 Row(children: [
                   CustomRadioButton(
-                      text: "B1",
+                      text: "Blue 1",
                       groupValue: _station,
                       value: Station.b1,
                       onChanged: (Station value) {
@@ -138,7 +140,7 @@ class _HomePageState extends State<HomePage> {
                         });
                       }),
                   CustomRadioButton(
-                      text: "B2",
+                      text: "Blue 2",
                       groupValue: _station,
                       value: Station.b2,
                       onChanged: (Station value) {
@@ -147,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                         });
                       }),
                   CustomRadioButton(
-                      text: "B3",
+                      text: "Blue 3",
                       groupValue: _station,
                       value: Station.b3,
                       onChanged: (Station value) {

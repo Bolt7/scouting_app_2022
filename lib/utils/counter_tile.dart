@@ -23,63 +23,54 @@ class CounterTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        margin: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.blue[200],
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Column(
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                IconButton(
-                  icon: Icon(
-                    Icons.remove,
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
-                  iconSize: 32.0 * scaleFactor,
-                  color: Theme.of(context).primaryColor,
-                  onPressed: () {
-                    onDecrease(value);
-                  },
-                ),
-                Text(
-                  '$value',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 18.0 * scaleFactor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(
-                    Icons.add,
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
-                  iconSize: 32.0 * scaleFactor,
-                  color: Theme.of(context).primaryColor,
-                  onPressed: () {
-                    onIncrease(value);
-                  },
-                ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: 12 * scaleFactor),
-              child: Text(
-                label,
-                style: TextStyle(
-                  fontSize: 18 * scaleFactor,
-                  fontWeight: FontWeight.bold,
-                ),
+            IconButton(
+              icon: Icon(
+                Icons.remove,
+                color: Theme.of(context).colorScheme.secondary,
               ),
+              iconSize: 32.0 * scaleFactor,
+              color: Theme.of(context).primaryColor,
+              onPressed: () {
+                onDecrease(value);
+              },
+            ),
+            Text(
+              '$value',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18.0 * scaleFactor,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.add,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+              iconSize: 32.0 * scaleFactor,
+              color: Theme.of(context).primaryColor,
+              onPressed: () {
+                onIncrease(value);
+              },
             ),
           ],
         ),
-      ),
+        Padding(
+          padding: EdgeInsets.only(bottom: 12 * scaleFactor),
+          child: Text(
+            label,
+            style: TextStyle(
+              fontSize: 18 * scaleFactor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

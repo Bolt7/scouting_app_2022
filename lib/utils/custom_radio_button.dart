@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-class CustomRadioButton extends StatefulWidget {
+class CustomRadioButton extends StatelessWidget {
   final String text;
   final Enum groupValue;
   final Enum value;
@@ -17,28 +17,30 @@ class CustomRadioButton extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<CustomRadioButton> createState() => _CustomRadioButtonState();
-}
-
-class _CustomRadioButtonState extends State<CustomRadioButton> {
-  @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: OutlinedButton(
           style: ButtonStyle(
-            backgroundColor: MaterialStateColor.resolveWith((states) {
+            backgroundColor: MaterialStateProperty.resolveWith((states) {
               return Colors.white;
             }),
+            padding: MaterialStateProperty.resolveWith((states) {
+              return const EdgeInsets.all(10);
+            }),
+            side: MaterialStateProperty.resolveWith((states) {
+              return BorderSide(
+                width: 2,
+                color: (value == groupValue) ? Colors.indigo : Colors.grey,
+              );
+            }),
           ),
-          onPressed: () => widget.onChanged(widget.value),
+          onPressed: () => onChanged(value),
           child: Text(
-            widget.text,
+            text,
             style: TextStyle(
-              color: (widget.value == widget.groupValue)
-                  ? Colors.indigo
-                  : Colors.grey,
+              color: (value == groupValue) ? Colors.indigo : Colors.grey,
               fontSize: 20,
             ),
           ),
