@@ -36,31 +36,18 @@ class _QRPageState extends State<QRPage> {
         "Ranking Points",
         "Comments"
       ],
-      [
-        "",
-        false,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        false,
-        false,
-        false,
-        false,
-        0,
-        ""
-      ]
+      ["", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ""]
     ];
 
     for (var key in csvList[0]) {
       if (preferences.get(key).toString() != "null") {
-        csvList[1][csvList[0].indexOf(key)] = preferences.get(key).toString();
+        final Object? value;
+        if (preferences.get(key).runtimeType == bool) {
+          value = preferences.get(key) as bool ? 1 : 0;
+        } else {
+          value = preferences.get(key);
+        }
+        csvList[1][csvList[0].indexOf(key)] = value;
       }
       // print("$key: ${csvList[1][csvList[0].indexOf(key)]}");
     }
