@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scouting_test/utils/palette.dart';
 
 class CustomToggleButton extends StatelessWidget {
   final String text;
@@ -26,7 +27,7 @@ class CustomToggleButton extends StatelessWidget {
         side: MaterialStateProperty.resolveWith((states) {
           return BorderSide(
             width: 2,
-            color: value ? Colors.indigo : Colors.grey,
+            color: value ? Palette.primaryColor : Palette.inactiveButton,
           );
         }),
       ),
@@ -34,7 +35,7 @@ class CustomToggleButton extends StatelessWidget {
         text,
         style: TextStyle(
           fontSize: 20,
-          color: value ? Colors.indigo : Colors.grey,
+          color: value ? Palette.primaryColor : Palette.inactiveButton,
         ),
       ),
     );

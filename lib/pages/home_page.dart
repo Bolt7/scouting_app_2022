@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_test/pages/qr_page.dart';
+import 'package:scouting_test/utils/palette.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/custom_radio_button.dart';
@@ -94,7 +95,7 @@ class _HomePageState extends State<HomePage> {
             margin: const EdgeInsets.all(10),
             padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 9),
             decoration: BoxDecoration(
-              color: Colors.blue[200],
+              color: Palette.tileColor,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Column(

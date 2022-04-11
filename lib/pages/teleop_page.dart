@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_test/utils/custom_toggle_button.dart';
+import 'package:scouting_test/utils/palette.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/counter_tile.dart';
@@ -123,7 +124,7 @@ class _TeleopPageState extends State<TeleopPage> {
           margin: const EdgeInsets.all(10),
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: Colors.blue[200],
+            color: Palette.tileColor,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
@@ -161,7 +162,7 @@ class _TeleopPageState extends State<TeleopPage> {
               margin: const EdgeInsets.all(10),
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Colors.blue[200],
+                color: Palette.tileColor,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Column(
@@ -202,7 +203,7 @@ class _TeleopPageState extends State<TeleopPage> {
               margin: const EdgeInsets.all(10),
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Colors.blue[200],
+                color: Palette.tileColor,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Column(

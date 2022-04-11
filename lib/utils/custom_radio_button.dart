@@ -1,6 +1,5 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
+import 'package:scouting_test/utils/palette.dart';
 
 class CustomRadioButton extends StatelessWidget {
   final String text;
@@ -32,7 +31,9 @@ class CustomRadioButton extends StatelessWidget {
             side: MaterialStateProperty.resolveWith((states) {
               return BorderSide(
                 width: 2,
-                color: (value == groupValue) ? Colors.indigo : Colors.grey,
+                color: (value == groupValue)
+                    ? Palette.primaryColor
+                    : Palette.inactiveButton,
               );
             }),
           ),
@@ -40,7 +41,9 @@ class CustomRadioButton extends StatelessWidget {
           child: Text(
             text,
             style: TextStyle(
-              color: (value == groupValue) ? Colors.indigo : Colors.grey,
+              color: (value == groupValue)
+                  ? Palette.primaryColor
+                  : Palette.inactiveButton,
               fontSize: 20,
             ),
           ),

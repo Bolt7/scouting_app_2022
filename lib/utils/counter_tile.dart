@@ -4,6 +4,7 @@
 //https://stackoverflow.com/a/65271573
 
 import 'package:flutter/material.dart';
+import 'package:scouting_test/utils/palette.dart';
 
 class CounterTile extends StatelessWidget {
   final String label;
@@ -31,10 +32,10 @@ class CounterTile extends StatelessWidget {
             IconButton(
               icon: Icon(
                 Icons.remove,
-                color: Theme.of(context).colorScheme.secondary,
+                color: Palette.primaryColor,
               ),
               iconSize: 32.0 * scaleFactor,
-              color: Theme.of(context).primaryColor,
+              color: Palette.primaryColor,
               onPressed: () {
                 onDecrease(value);
               },
@@ -50,10 +51,10 @@ class CounterTile extends StatelessWidget {
             IconButton(
               icon: Icon(
                 Icons.add,
-                color: Theme.of(context).colorScheme.secondary,
+                color: Palette.primaryColor,
               ),
               iconSize: 32.0 * scaleFactor,
-              color: Theme.of(context).primaryColor,
+              color: Palette.primaryColor,
               onPressed: () {
                 onIncrease(value);
               },

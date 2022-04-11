@@ -4,6 +4,7 @@ import 'package:scouting_test/pages/comment_page.dart';
 import 'package:scouting_test/pages/endgame_page.dart';
 import 'package:scouting_test/pages/home_page.dart';
 import 'package:scouting_test/pages/teleop_page.dart';
+import 'package:scouting_test/utils/palette.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Scouting Test",
       theme: ThemeData(
-        primarySwatch: Colors.indigo,
+        primarySwatch: Palette.primaryColor,
       ),
       home: const MyHomePage(title: "Scouting App Flutter Mockup"),
     );
@@ -52,12 +53,15 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(
+          widget.title,
+          style: const TextStyle(color: Palette.primaryContrast),
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.indigo,
-        unselectedItemColor: Colors.grey,
-        fixedColor: Colors.white,
+        backgroundColor: Palette.primaryColor,
+        unselectedItemColor: Palette.inactiveButton,
+        fixedColor: Palette.primaryContrast,
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedPage,
         onTap: _onNavigationItemTapped,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_test/utils/custom_radio_button.dart';
+import 'package:scouting_test/utils/palette.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum Try { none, attempt, success }
@@ -115,7 +116,7 @@ class _EndgamePageState extends State<EndgamePage> {
           margin: const EdgeInsets.all(10),
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 9),
           decoration: BoxDecoration(
-            color: Colors.blue[200],
+            color: Palette.tileColor,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
@@ -148,7 +149,7 @@ class _EndgamePageState extends State<EndgamePage> {
           margin: const EdgeInsets.all(10),
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 9),
           decoration: BoxDecoration(
-            color: Colors.blue[200],
+            color: Palette.tileColor,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Column(
@@ -191,7 +192,7 @@ class _EndgamePageState extends State<EndgamePage> {
           margin: const EdgeInsets.all(10),
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 9),
           decoration: BoxDecoration(
-            color: Colors.blue[200],
+            color: Palette.tileColor,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(children: [
