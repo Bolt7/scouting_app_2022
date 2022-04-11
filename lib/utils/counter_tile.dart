@@ -4,7 +4,7 @@
 //https://stackoverflow.com/a/65271573
 
 import 'package:flutter/material.dart';
-import 'package:scouting_test/utils/palette.dart';
+import 'package:scouting_app_2022/utils/palette.dart';
 
 class CounterTile extends StatelessWidget {
   final String label;

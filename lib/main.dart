@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:scouting_test/pages/auto_page.dart';
-import 'package:scouting_test/pages/comment_page.dart';
-import 'package:scouting_test/pages/endgame_page.dart';
-import 'package:scouting_test/pages/home_page.dart';
-import 'package:scouting_test/pages/teleop_page.dart';
-import 'package:scouting_test/utils/palette.dart';
+import 'package:scouting_app_2022/pages/auto_page.dart';
+import 'package:scouting_app_2022/pages/comment_page.dart';
+import 'package:scouting_app_2022/pages/endgame_page.dart';
+import 'package:scouting_app_2022/pages/home_page.dart';
+import 'package:scouting_app_2022/pages/teleop_page.dart';
+import 'package:scouting_app_2022/utils/palette.dart';
 
 void main() {
   runApp(const MyApp());

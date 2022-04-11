@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(scouting_test LANGUAGES CXX)
+project(scouting_app_2022 LANGUAGES CXX)
 
-set(BINARY_NAME "scouting_test")
+set(BINARY_NAME "scouting_app_2022")
 
 cmake_policy(SET CMP0063 NEW)
 

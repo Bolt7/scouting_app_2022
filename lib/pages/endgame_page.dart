@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:scouting_test/utils/custom_radio_button.dart';
-import 'package:scouting_test/utils/palette.dart';
+import 'package:scouting_app_2022/utils/custom_radio_button.dart';
+import 'package:scouting_app_2022/utils/palette.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum Try { none, attempt, success }

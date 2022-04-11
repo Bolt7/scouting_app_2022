@@ -1,4 +1,4 @@
-# scouting_test
+# scouting_app_2022
 
 A new Flutter project.
 
