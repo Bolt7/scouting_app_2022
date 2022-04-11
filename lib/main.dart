@@ -15,11 +15,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Scouting Test",
+      title: "Scouting App 2022",
       theme: ThemeData(
         primarySwatch: Palette.primaryColor,
       ),
-      home: const MyHomePage(title: "Scouting App Flutter Mockup"),
+      home: const MyHomePage(title: "Scouting App"),
     );
   }
 }
