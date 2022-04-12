@@ -1,19 +1,17 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 //copied increment decrement idea from stackoverflow, credit does to funder7
 //https://stackoverflow.com/a/65271573
 
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2022/utils/palette.dart';
 
-class CounterTile extends StatelessWidget {
+class Counter extends StatelessWidget {
   final String label;
   final double scaleFactor;
   final int value;
   final ValueChanged<int> onIncrease;
   final ValueChanged<int> onDecrease;
 
-  const CounterTile({
+  const Counter({
     required this.onIncrease,
     required this.onDecrease,
     this.label = "",

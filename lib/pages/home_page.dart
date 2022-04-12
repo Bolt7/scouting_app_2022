@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2022/pages/qr_page.dart';
 import 'package:scouting_app_2022/utils/palette.dart';
+import 'package:scouting_app_2022/utils/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/custom_radio_button.dart';
@@ -56,33 +57,27 @@ class _HomePageState extends State<HomePage> {
           const Center(
             child: Text(
               "Main",
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Style.title,
             ),
           ),
           const SizedBox(height: 20),
           Padding(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              children: [
-                TextField(
-                  controller: _scoutNameController,
-                  decoration: const InputDecoration(labelText: "Scout Name"),
-                ),
-                TextField(
-                  controller: _teamNameController,
-                  decoration: const InputDecoration(
-                    labelText: "Team Number",
-                  ),
-                ),
-              ],
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: TextField(
+              controller: _scoutNameController,
+              decoration: const InputDecoration(labelText: "Scout Name"),
             ),
           ),
-          const SizedBox(
-            height: 20,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: TextField(
+              controller: _teamNameController,
+              decoration: const InputDecoration(
+                labelText: "Team Number",
+              ),
+            ),
           ),
+          const SizedBox(height: 20),
           const Center(
             child: Text(
               "Station",
@@ -163,18 +158,21 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           const SizedBox(height: 30),
-          ElevatedButton(
-            onPressed: () {
-              _saveData();
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const QRPage()),
-              );
-            },
-            child: const Text(
-              "Generate QR Code",
-              style: TextStyle(
-                fontSize: 20,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: ElevatedButton(
+              onPressed: () {
+                _saveData();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const QRPage()),
+                );
+              },
+              child: const Text(
+                "Generate QR Code",
+                style: TextStyle(
+                  fontSize: 20,
+                ),
               ),
             ),
           ),

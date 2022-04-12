@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2022/utils/custom_radio_button.dart';
 import 'package:scouting_app_2022/utils/palette.dart';
+import 'package:scouting_app_2022/utils/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum Try { none, attempt, success }
@@ -97,126 +98,126 @@ class _EndgamePageState extends State<EndgamePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text(
-            "Endgame",
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: ListView(
+        scrollDirection: Axis.vertical,
+        children: [
+          const Center(
+            child: Text(
+              "Endgame",
+              style: Style.title,
             ),
           ),
-        ),
-        const SizedBox(height: 10),
+          const SizedBox(height: 10),
 
-        // Try Radio Buttons
-        Container(
-          margin: const EdgeInsets.all(10),
-          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 9),
-          decoration: BoxDecoration(
-            color: Palette.tileColor,
-            borderRadius: BorderRadius.circular(10),
+          // Try Radio Buttons
+          Container(
+            margin: const EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 9),
+            decoration: BoxDecoration(
+              color: Palette.tileColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                CustomRadioButton(
+                  text: "None",
+                  value: Try.none,
+                  groupValue: _try,
+                  onChanged: _updateTry,
+                ),
+                CustomRadioButton(
+                  text: "Attempt",
+                  value: Try.attempt,
+                  groupValue: _try,
+                  onChanged: _updateTry,
+                ),
+                CustomRadioButton(
+                  text: "Success",
+                  value: Try.success,
+                  groupValue: _try,
+                  onChanged: _updateTry,
+                ),
+              ],
+            ),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
+
+          // Rung Radio Buttons
+          Container(
+            margin: const EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 9),
+            decoration: BoxDecoration(
+              color: Palette.tileColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              children: [
+                Row(children: [
+                  CustomRadioButton(
+                    text: "Low Rung",
+                    value: Rung.low,
+                    groupValue: _rung,
+                    onChanged: _updateRung,
+                  ),
+                  CustomRadioButton(
+                    text: "Mid Rung",
+                    value: Rung.mid,
+                    groupValue: _rung,
+                    onChanged: _updateRung,
+                  ),
+                ]),
+                const SizedBox(height: 10),
+                Row(children: [
+                  CustomRadioButton(
+                    text: "High Rung",
+                    value: Rung.high,
+                    groupValue: _rung,
+                    onChanged: _updateRung,
+                  ),
+                  CustomRadioButton(
+                    text: "Traversal Rung",
+                    value: Rung.traversal,
+                    groupValue: _rung,
+                    onChanged: _updateRung,
+                  ),
+                ])
+              ],
+            ),
+          ),
+
+          // Speed Radio Buttons
+          Container(
+            margin: const EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 9),
+            decoration: BoxDecoration(
+              color: Palette.tileColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(children: [
               CustomRadioButton(
-                text: "None",
-                value: Try.none,
-                groupValue: _try,
-                onChanged: _updateTry,
+                text: "Slow",
+                value: Speed.slow,
+                groupValue: _speed,
+                onChanged: _updateSpeed,
               ),
               CustomRadioButton(
-                text: "Attempt",
-                value: Try.attempt,
-                groupValue: _try,
-                onChanged: _updateTry,
+                text: "Medium",
+                value: Speed.medium,
+                groupValue: _speed,
+                onChanged: _updateSpeed,
               ),
               CustomRadioButton(
-                text: "Success",
-                value: Try.success,
-                groupValue: _try,
-                onChanged: _updateTry,
+                text: "Fast",
+                value: Speed.fast,
+                groupValue: _speed,
+                onChanged: _updateSpeed,
               ),
-            ],
+            ]),
           ),
-        ),
-
-        // Rung Radio Buttons
-        Container(
-          margin: const EdgeInsets.all(10),
-          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 9),
-          decoration: BoxDecoration(
-            color: Palette.tileColor,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Column(
-            children: [
-              Row(children: [
-                CustomRadioButton(
-                  text: "Low Rung",
-                  value: Rung.low,
-                  groupValue: _rung,
-                  onChanged: _updateRung,
-                ),
-                CustomRadioButton(
-                  text: "Mid Rung",
-                  value: Rung.mid,
-                  groupValue: _rung,
-                  onChanged: _updateRung,
-                ),
-              ]),
-              const SizedBox(height: 10),
-              Row(children: [
-                CustomRadioButton(
-                  text: "High Rung",
-                  value: Rung.high,
-                  groupValue: _rung,
-                  onChanged: _updateRung,
-                ),
-                CustomRadioButton(
-                  text: "Traversal Rung",
-                  value: Rung.traversal,
-                  groupValue: _rung,
-                  onChanged: _updateRung,
-                ),
-              ])
-            ],
-          ),
-        ),
-
-        // Speed Radio Buttons
-        Container(
-          margin: const EdgeInsets.all(10),
-          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 9),
-          decoration: BoxDecoration(
-            color: Palette.tileColor,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Row(children: [
-            CustomRadioButton(
-              text: "Slow",
-              value: Speed.slow,
-              groupValue: _speed,
-              onChanged: _updateSpeed,
-            ),
-            CustomRadioButton(
-              text: "Medium",
-              value: Speed.medium,
-              groupValue: _speed,
-              onChanged: _updateSpeed,
-            ),
-            CustomRadioButton(
-              text: "Fast",
-              value: Speed.fast,
-              groupValue: _speed,
-              onChanged: _updateSpeed,
-            ),
-          ]),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

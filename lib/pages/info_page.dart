@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2022/utils/custom_toggle_button.dart';
+import 'package:scouting_app_2022/utils/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CommentPage extends StatefulWidget {
@@ -56,14 +57,12 @@ class _CommentPageState extends State<CommentPage> {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: ListView(
+        scrollDirection: Axis.vertical,
         children: [
           const Center(
             child: Text(
               "Info",
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Style.title,
             ),
           ),
           const SizedBox(height: 20),

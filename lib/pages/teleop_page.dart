@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2022/utils/custom_toggle_button.dart';
-import 'package:scouting_app_2022/utils/palette.dart';
+import 'package:scouting_app_2022/utils/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../utils/counter_tile.dart';
+import '../utils/counter.dart';
+import '../utils/tile.dart';
 
 class TeleopPage extends StatefulWidget {
   const TeleopPage({Key? key}) : super(key: key);
@@ -13,9 +14,6 @@ class TeleopPage extends StatefulWidget {
 }
 
 class _TeleopPageState extends State<TeleopPage> {
-  static const int _numberMax = 10;
-  static const int _numberMin = 0;
-
   bool _defending = false;
   int _fouls = 0;
   int _techFouls = 0;
@@ -23,44 +21,6 @@ class _TeleopPageState extends State<TeleopPage> {
   int _highHits = 0;
   int _lowMisses = 0;
   int _highMisses = 0;
-
-  void _updateData(int value, String label, bool direction) {
-    final bool allowed;
-    final int newValue;
-
-    if (direction) {
-      allowed = value < _numberMax;
-      newValue = value + 1;
-    } else {
-      allowed = value > _numberMin;
-      newValue = value - 1;
-    }
-
-    if (!allowed) return;
-
-    setState(() {
-      switch (label) {
-        case "Foul":
-          _fouls = newValue;
-          break;
-        case "Tech Foul":
-          _techFouls = newValue;
-          break;
-        case "Low Hit":
-          _lowHits = newValue;
-          break;
-        case "High Hit":
-          _highHits = newValue;
-          break;
-        case "Low Miss":
-          _lowMisses = newValue;
-          break;
-        case "High Miss":
-          _highMisses = newValue;
-          break;
-      }
-    });
-  }
 
   Future _getData() async {
     final preferences = await SharedPreferences.getInstance();
@@ -100,147 +60,117 @@ class _TeleopPageState extends State<TeleopPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text(
-            "Teleop",
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: ListView(
+        scrollDirection: Axis.vertical,
+        children: [
+          const Center(
+            child: Text(
+              "Teleop",
+              style: Style.title,
             ),
           ),
-        ),
-        const SizedBox(height: 20),
-        CustomToggleButton(
-          text: "Robot Defending",
-          value: _defending,
-          onPressed: () => setState(() {
-            _defending = !_defending;
-          }),
-        ),
-        Container(
-          margin: const EdgeInsets.all(10),
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: Palette.tileColor,
-            borderRadius: BorderRadius.circular(10),
+          const SizedBox(height: 20),
+          Container(
+            alignment: Alignment.center,
+            child: CustomToggleButton(
+              text: "Robot Defending",
+              value: _defending,
+              onPressed: () => setState(() => _defending = !_defending),
+            ),
           ),
-          child: Row(
-            children: [
-              Expanded(
-                child: CounterTile(
+          const SizedBox(height: 20),
+          Tile(
+            child: Row(children: [
+              Flexible(
+                child: Counter(
                   label: "Foul",
                   value: _fouls,
-                  onIncrease: (value) {
-                    _updateData(value, "Foul", true);
-                  },
-                  onDecrease: (value) {
-                    _updateData(value, "Foul", false);
-                  },
+                  onIncrease: (value) => setState(() => _fouls++),
+                  onDecrease: (value) => setState(() {
+                    if (_fouls > 0) _fouls--;
+                  }),
                 ),
               ),
-              Expanded(
-                child: CounterTile(
+              Flexible(
+                child: Counter(
                   label: "Tech Foul",
                   value: _techFouls,
-                  onIncrease: (value) {
-                    _updateData(value, "Tech Foul", true);
-                  },
-                  onDecrease: (value) {
-                    _updateData(value, "Tech Foul", false);
-                  },
+                  onIncrease: (value) => setState(() => _techFouls++),
+                  onDecrease: (value) => setState(() {
+                    if (_techFouls > 0) _techFouls--;
+                  }),
                 ),
               ),
-            ],
+            ]),
           ),
-        ),
-        Row(children: [
-          Expanded(
-            child: Container(
-              margin: const EdgeInsets.all(10),
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Palette.tileColor,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                children: [
-                  const Text(
-                    "Low Goal",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+          Row(children: [
+            Flexible(
+              child: Tile(
+                child: Column(
+                  children: [
+                    const Text(
+                      "Low Goal",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  CounterTile(
-                    label: "Scored",
-                    value: _lowHits,
-                    onIncrease: (value) {
-                      _updateData(value, "Low Hit", true);
-                    },
-                    onDecrease: (value) {
-                      _updateData(value, "Low Hit", false);
-                    },
-                  ),
-                  CounterTile(
-                    label: "Missed",
-                    value: _lowMisses,
-                    onIncrease: (value) {
-                      _updateData(value, "Low Miss", true);
-                    },
-                    onDecrease: (value) {
-                      _updateData(value, "Low Miss", false);
-                    },
-                  ),
-                ],
+                    Counter(
+                      label: "Scored",
+                      value: _lowHits,
+                      onIncrease: (value) => setState(() => _lowHits++),
+                      onDecrease: (value) => setState(() {
+                        if (_lowHits > 0) _lowHits--;
+                      }),
+                    ),
+                    Counter(
+                      label: "Missed",
+                      value: _lowMisses,
+                      onIncrease: (value) => setState(() => _lowMisses++),
+                      onDecrease: (value) => setState(() {
+                        if (_lowMisses > 0) _lowMisses--;
+                      }),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          Expanded(
-            child: Container(
-              margin: const EdgeInsets.all(10),
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Palette.tileColor,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                children: [
-                  const Text(
-                    "High Goal",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+            Flexible(
+              child: Tile(
+                child: Column(
+                  children: [
+                    const Text(
+                      "High Goal",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  CounterTile(
-                    label: "Scored",
-                    value: _highHits,
-                    onIncrease: (value) {
-                      _updateData(value, "High Hit", true);
-                    },
-                    onDecrease: (value) {
-                      _updateData(value, "High Hit", false);
-                    },
-                  ),
-                  CounterTile(
-                    label: "Missed",
-                    value: _highMisses,
-                    onIncrease: (value) {
-                      _updateData(value, "High Miss", true);
-                    },
-                    onDecrease: (value) {
-                      _updateData(value, "High Miss", false);
-                    },
-                  ),
-                ],
+                    Counter(
+                      label: "Scored",
+                      value: _highHits,
+                      onIncrease: (value) => setState(() => _highHits++),
+                      onDecrease: (value) => setState(() {
+                        if (_highHits > 0) _highHits--;
+                      }),
+                    ),
+                    Counter(
+                      label: "Missed",
+                      value: _highMisses,
+                      onIncrease: (value) => setState(() => _highMisses++),
+                      onDecrease: (value) => setState(() {
+                        if (_highMisses > 0) _highMisses--;
+                      }),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ]),
-      ],
+          ]),
+        ],
+      ),
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scouting_app_2022/pages/auto_page.dart';
-import 'package:scouting_app_2022/pages/comment_page.dart';
+import 'package:scouting_app_2022/pages/info_page.dart';
 import 'package:scouting_app_2022/pages/endgame_page.dart';
 import 'package:scouting_app_2022/pages/home_page.dart';
 import 'package:scouting_app_2022/pages/teleop_page.dart';

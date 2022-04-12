@@ -52,7 +52,7 @@ class _QRPageState extends State<QRPage> {
       // print("$key: ${csvList[1][csvList[0].indexOf(key)]}");
     }
     setState(() {
-      data = const ListToCsvConverter().convert(csvList);
+      data = const ListToCsvConverter().convert([csvList[1]]);
     });
   }
 
