@@ -29,6 +29,7 @@ class _QRPageState extends State<QRPage> {
         "Teleop High Goal Miss",
         "Foul",
         "Tech Foul",
+        "Defensive",
         "Low Rung Success",
         "Mid Rung Success",
         "High Rung Success",
@@ -36,7 +37,7 @@ class _QRPageState extends State<QRPage> {
         "Ranking Points",
         "Comments"
       ],
-      ["", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ""]
+      ["", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ""]
     ];
 
     for (var key in csvList[0]) {

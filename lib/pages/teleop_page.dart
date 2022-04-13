@@ -14,7 +14,7 @@ class TeleopPage extends StatefulWidget {
 }
 
 class _TeleopPageState extends State<TeleopPage> {
-  bool _defending = false;
+  bool _defensive = false;
   int _fouls = 0;
   int _techFouls = 0;
   int _lowHits = 0;
@@ -25,7 +25,7 @@ class _TeleopPageState extends State<TeleopPage> {
   Future _getData() async {
     final preferences = await SharedPreferences.getInstance();
     setState(() {
-      _defending = preferences.getBool("defending") ?? false;
+      _defensive = preferences.getBool("Defensive") ?? false;
       _fouls = preferences.getInt("Foul") ?? 0;
       _techFouls = preferences.getInt("Tech Foul") ?? 0;
       _lowHits = preferences.getInt("Teleop Low Goal Scored") ?? 0;
@@ -37,7 +37,7 @@ class _TeleopPageState extends State<TeleopPage> {
 
   Future _saveData() async {
     final preferences = await SharedPreferences.getInstance();
-    await preferences.setBool("defending", _defending);
+    await preferences.setBool("Defensive", _defensive);
     await preferences.setInt("Foul", _fouls);
     await preferences.setInt("Tech Foul", _techFouls);
     await preferences.setInt("Teleop Low Goal Scored", _lowHits);
@@ -75,9 +75,9 @@ class _TeleopPageState extends State<TeleopPage> {
           Container(
             alignment: Alignment.center,
             child: CustomToggleButton(
-              text: "Robot Defending",
-              value: _defending,
-              onPressed: () => setState(() => _defending = !_defending),
+              text: "Defensive Play",
+              value: _defensive,
+              onPressed: () => setState(() => _defensive = !_defensive),
             ),
           ),
           const SizedBox(height: 20),
