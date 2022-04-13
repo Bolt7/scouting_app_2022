@@ -75,7 +75,7 @@ class _QRPageState extends State<QRPage> {
               horizontal: 20,
               vertical: 5,
             ),
-            child: Text(
+            child: SelectableText(
               data,
               style: const TextStyle(
                 fontSize: 14,

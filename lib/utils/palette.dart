@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
 import 'package:flutter/material.dart';
 
 /*
@@ -8,12 +6,9 @@ Colors.indigo
 Colors.blue[200]
 Colors.grey
 Colors.white
-
-New Colors
-Color.fromARGB(255, 3, 34, 56)
 */
 class Palette {
-  static var primaryColor = MaterialColor(0xff1e2d4a, {
+  static var primaryColor = const MaterialColor(0xff1e2d4a, {
     50: Colors.white,
     100: Colors.white,
     200: Colors.white,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:scouting_app_2022/pages/qr_page.dart';
-import 'package:scouting_app_2022/utils/palette.dart';
-import 'package:scouting_app_2022/utils/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/custom_radio_button.dart';
+import '../pages/qr_page.dart';
+import '../utils/palette.dart';
+import '../utils/style.dart';
 
 enum Station { r1, r2, r3, b1, b2, b3 }
 

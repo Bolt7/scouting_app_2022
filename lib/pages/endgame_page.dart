@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:scouting_app_2022/utils/custom_radio_button.dart';
-import 'package:scouting_app_2022/utils/palette.dart';
-import 'package:scouting_app_2022/utils/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../utils/tile.dart';
+import '../utils/custom_radio_button.dart';
+import '../utils/style.dart';
 
 enum Try { none, attempt, success }
 enum Rung { low, mid, high, traversal }
@@ -20,29 +21,9 @@ class _EndgamePageState extends State<EndgamePage> {
   Rung _rung = Rung.low;
   Speed _speed = Speed.slow;
 
-  void _updateTry(Try? value) {
-    setState(
-      () {
-        _try = value!;
-      },
-    );
-  }
-
-  void _updateRung(Rung? value) {
-    setState(
-      () {
-        _rung = value!;
-      },
-    );
-  }
-
-  void _updateSpeed(Speed? value) {
-    setState(
-      () {
-        _speed = value!;
-      },
-    );
-  }
+  void _updateTry(Try? value) => setState(() => _try = value!);
+  void _updateRung(Rung? value) => setState(() => _rung = value!);
+  void _updateSpeed(Speed? value) => setState(() => _speed = value!);
 
   // Data Management
   Future _getData() async {
@@ -55,8 +36,6 @@ class _EndgamePageState extends State<EndgamePage> {
   }
 
   Future _saveData() async {
-    // static const
-
     final preferences = await SharedPreferences.getInstance();
     preferences.setInt("try", _try.index);
     preferences.setInt("rung", _rung.index);
@@ -112,13 +91,8 @@ class _EndgamePageState extends State<EndgamePage> {
           const SizedBox(height: 10),
 
           // Try Radio Buttons
-          Container(
-            margin: const EdgeInsets.all(10),
-            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 9),
-            decoration: BoxDecoration(
-              color: Palette.tileColor,
-              borderRadius: BorderRadius.circular(10),
-            ),
+          Tile(
+            isRadio: true,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -145,13 +119,8 @@ class _EndgamePageState extends State<EndgamePage> {
           ),
 
           // Rung Radio Buttons
-          Container(
-            margin: const EdgeInsets.all(10),
-            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 9),
-            decoration: BoxDecoration(
-              color: Palette.tileColor,
-              borderRadius: BorderRadius.circular(10),
-            ),
+          Tile(
+            isRadio: true,
             child: Column(
               children: [
                 Row(children: [
@@ -188,13 +157,8 @@ class _EndgamePageState extends State<EndgamePage> {
           ),
 
           // Speed Radio Buttons
-          Container(
-            margin: const EdgeInsets.all(10),
-            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 9),
-            decoration: BoxDecoration(
-              color: Palette.tileColor,
-              borderRadius: BorderRadius.circular(10),
-            ),
+          Tile(
+            isRadio: true,
             child: Row(children: [
               CustomRadioButton(
                 text: "Slow",

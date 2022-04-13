@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:scouting_app_2022/utils/palette.dart';
+
+import '../utils/palette.dart';
 
 class CustomRadioButton extends StatelessWidget {
   final String text;

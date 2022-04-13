@@ -2,7 +2,8 @@
 //https://stackoverflow.com/a/65271573
 
 import 'package:flutter/material.dart';
-import 'package:scouting_app_2022/utils/palette.dart';
+
+import '../utils/palette.dart';
 
 class Counter extends StatelessWidget {
   final String label;

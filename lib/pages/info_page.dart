@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:scouting_app_2022/utils/custom_toggle_button.dart';
-import 'package:scouting_app_2022/utils/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../utils/custom_toggle_button.dart';
+import '../utils/style.dart';
 
 class CommentPage extends StatefulWidget {
   const CommentPage({Key? key}) : super(key: key);

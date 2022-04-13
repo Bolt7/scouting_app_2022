@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:scouting_app_2022/utils/custom_toggle_button.dart';
-import 'package:scouting_app_2022/utils/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/counter.dart';
 import '../utils/tile.dart';
+import '../utils/custom_toggle_button.dart';
+import '../utils/style.dart';
 
 class AutoPage extends StatefulWidget {
   const AutoPage({Key? key}) : super(key: key);
@@ -78,6 +78,7 @@ class _AutoPageState extends State<AutoPage> {
           Row(children: [
             Flexible(
               child: Tile(
+                isRadio: false,
                 child: Column(
                   children: [
                     const Text(
@@ -110,6 +111,7 @@ class _AutoPageState extends State<AutoPage> {
             ),
             Flexible(
               child: Tile(
+                isRadio: false,
                 child: Column(
                   children: [
                     const Text(
