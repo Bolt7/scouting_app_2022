@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../utils/button.dart';
 import '../utils/tile.dart';
-import '../utils/custom_radio_button.dart';
-import '../utils/style.dart';
 
-enum Try { none, attempt, success }
-enum Rung { low, mid, high, traversal }
-enum Speed { slow, medium, fast }
+enum Rung { none, low, mid, high, traversal }
 
 class EndgamePage extends StatefulWidget {
   const EndgamePage({Key? key}) : super(key: key);
@@ -17,56 +14,44 @@ class EndgamePage extends StatefulWidget {
 }
 
 class _EndgamePageState extends State<EndgamePage> {
-  Try _try = Try.none;
-  Rung _rung = Rung.low;
-  Speed _speed = Speed.slow;
-
-  void _updateTry(Try? value) => setState(() => _try = value!);
-  void _updateRung(Rung? value) => setState(() => _rung = value!);
-  void _updateSpeed(Speed? value) => setState(() => _speed = value!);
+  Rung _rung = Rung.none;
 
   // Data Management
   Future _getData() async {
     final preferences = await SharedPreferences.getInstance();
-    setState(() {
-      _try = Try.values[preferences.getInt("try") ?? 0];
-      _rung = Rung.values[preferences.getInt("rung") ?? 0];
-      _speed = Speed.values[preferences.getInt("speed") ?? 0];
-    });
+    setState(() => _rung = Rung.values[preferences.getInt("rung") ?? 0]);
   }
 
   Future _saveData() async {
     final preferences = await SharedPreferences.getInstance();
-    preferences.setInt("try", _try.index);
     preferences.setInt("rung", _rung.index);
-    preferences.setInt("speed", _speed.index);
 
     preferences.setBool("Low Rung Success", false);
     preferences.setBool("Mid Rung Success", false);
     preferences.setBool("High Rung Success", false);
     preferences.setBool("Traversal Rung Success", false);
 
-    if (_try == Try.success) {
-      switch (_rung) {
-        case Rung.low:
-          preferences.setBool("Low Rung Success", true);
-          break;
-        case Rung.mid:
-          preferences.setBool("Mid Rung Success", true);
-          break;
-        case Rung.high:
-          preferences.setBool("High Rung Success", true);
-          break;
-        case Rung.traversal:
-          preferences.setBool("Traversal Rung Success", true);
-      }
+    switch (_rung) {
+      case Rung.none:
+        break;
+      case Rung.low:
+        preferences.setBool("Low Rung Success", true);
+        break;
+      case Rung.mid:
+        preferences.setBool("Mid Rung Success", true);
+        break;
+      case Rung.high:
+        preferences.setBool("High Rung Success", true);
+        break;
+      case Rung.traversal:
+        preferences.setBool("Traversal Rung Success", true);
     }
   }
 
   @override
   void initState() {
-    super.initState();
     _getData();
+    super.initState();
   }
 
   @override
@@ -77,111 +62,73 @@ class _EndgamePageState extends State<EndgamePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: ListView(
-        scrollDirection: Axis.vertical,
-        children: [
-          const Center(
-            child: Text(
-              "Endgame",
-              style: Style.title,
+    return ListView(
+      scrollDirection: Axis.vertical,
+      children: [
+        SizedBox(
+          height: MediaQuery.of(context).size.height - 150,
+          child: Tile(
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Flex(
+                direction: Axis.vertical,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: CustomButton(
+                      text: "None",
+                      value: Rung.none,
+                      groupValue: _rung,
+                      onPressed: () => setState(() => _rung = Rung.none),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: CustomButton(
+                      text: "Low",
+                      value: Rung.low,
+                      groupValue: _rung,
+                      onPressed: () => setState(() => _rung = Rung.low),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: CustomButton(
+                      text: "Mid",
+                      value: Rung.mid,
+                      groupValue: _rung,
+                      onPressed: () => setState(() => _rung = Rung.mid),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: CustomButton(
+                      text: "High",
+                      value: Rung.high,
+                      groupValue: _rung,
+                      onPressed: () => setState(() => _rung = Rung.high),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: CustomButton(
+                      text: "Traversal",
+                      value: Rung.traversal,
+                      groupValue: _rung,
+                      onPressed: () => setState(() => _rung = Rung.traversal),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-          const SizedBox(height: 10),
-
-          // Try Radio Buttons
-          Tile(
-            isRadio: true,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                CustomRadioButton(
-                  text: "None",
-                  value: Try.none,
-                  groupValue: _try,
-                  onChanged: _updateTry,
-                ),
-                CustomRadioButton(
-                  text: "Attempt",
-                  value: Try.attempt,
-                  groupValue: _try,
-                  onChanged: _updateTry,
-                ),
-                CustomRadioButton(
-                  text: "Success",
-                  value: Try.success,
-                  groupValue: _try,
-                  onChanged: _updateTry,
-                ),
-              ],
-            ),
-          ),
-
-          // Rung Radio Buttons
-          Tile(
-            isRadio: true,
-            child: Column(
-              children: [
-                Row(children: [
-                  CustomRadioButton(
-                    text: "Low Rung",
-                    value: Rung.low,
-                    groupValue: _rung,
-                    onChanged: _updateRung,
-                  ),
-                  CustomRadioButton(
-                    text: "Mid Rung",
-                    value: Rung.mid,
-                    groupValue: _rung,
-                    onChanged: _updateRung,
-                  ),
-                ]),
-                const SizedBox(height: 10),
-                Row(children: [
-                  CustomRadioButton(
-                    text: "High Rung",
-                    value: Rung.high,
-                    groupValue: _rung,
-                    onChanged: _updateRung,
-                  ),
-                  CustomRadioButton(
-                    text: "Traversal Rung",
-                    value: Rung.traversal,
-                    groupValue: _rung,
-                    onChanged: _updateRung,
-                  ),
-                ])
-              ],
-            ),
-          ),
-
-          // Speed Radio Buttons
-          Tile(
-            isRadio: true,
-            child: Row(children: [
-              CustomRadioButton(
-                text: "Slow",
-                value: Speed.slow,
-                groupValue: _speed,
-                onChanged: _updateSpeed,
-              ),
-              CustomRadioButton(
-                text: "Medium",
-                value: Speed.medium,
-                groupValue: _speed,
-                onChanged: _updateSpeed,
-              ),
-              CustomRadioButton(
-                text: "Fast",
-                value: Speed.fast,
-                groupValue: _speed,
-                onChanged: _updateSpeed,
-              ),
-            ]),
-          ),
-        ],
-      ),
+        )
+      ],
     );
   }
 }

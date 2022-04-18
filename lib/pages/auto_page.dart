@@ -3,8 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/counter.dart';
 import '../utils/tile.dart';
-import '../utils/custom_toggle_button.dart';
-import '../utils/style.dart';
+import '../utils/button.dart';
 
 class AutoPage extends StatefulWidget {
   const AutoPage({Key? key}) : super(key: key);
@@ -54,97 +53,107 @@ class _AutoPageState extends State<AutoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: ListView(
-        scrollDirection: Axis.vertical,
-        children: [
-          const Center(
-            child: Text(
-              "Auto",
-              style: Style.title,
-            ),
-          ),
-          const SizedBox(height: 20),
-          Container(
-            alignment: Alignment.center,
-            child: CustomToggleButton(
-              text: "Taxi Used",
-              value: _taxi,
-              onPressed: () => setState(() => _taxi = !_taxi),
-            ),
-          ),
-          const SizedBox(height: 20),
-          Row(children: [
-            Flexible(
-              child: Tile(
-                isRadio: false,
-                child: Column(
-                  children: [
-                    const Text(
-                      "Low Goal",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+    return ListView(
+      scrollDirection: Axis.vertical,
+      children: [
+        CustomButton(
+          text: "Taxi",
+          value: _taxi,
+          onPressed: () => setState(() => _taxi = !_taxi),
+        ),
+        const SizedBox(height: 10),
+        Row(
+          children: [
+            Expanded(
+              child: Column(
+                children: [
+                  const Text(
+                    "Low",
+                    style: TextStyle(
+                      fontSize: 30,
                     ),
-                    const SizedBox(height: 20),
-                    Counter(
-                      label: "Scored",
-                      value: _lowHits,
-                      onIncrease: (value) => setState(() => _lowHits++),
-                      onDecrease: (value) => setState(() {
-                        if (_lowHits > 0) _lowHits--;
-                      }),
+                  ),
+                  const SizedBox(height: 10),
+                  Tile(
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 10),
+                        Counter(
+                          label: "Scored:",
+                          value: _lowHits,
+                          onIncrease: () => setState(() => _lowHits++),
+                          onDecrease: () => setState(() {
+                            if (_lowHits > 0) _lowHits--;
+                          }),
+                        ),
+                        const Divider(
+                          thickness: 2,
+                          indent: 10,
+                          endIndent: 10,
+                          height: 5,
+                        ),
+                        const SizedBox(height: 10),
+                        Counter(
+                          label: "Missed:",
+                          value: _lowMisses,
+                          onIncrease: () => setState(() => _lowMisses++),
+                          onDecrease: () => setState(() {
+                            if (_lowMisses > 0) _lowMisses--;
+                          }),
+                        ),
+                      ],
                     ),
-                    Counter(
-                      label: "Missed",
-                      value: _lowMisses,
-                      onIncrease: (value) => setState(() => _lowMisses++),
-                      onDecrease: (value) => setState(() {
-                        if (_lowMisses > 0) _lowMisses--;
-                      }),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-            Flexible(
-              child: Tile(
-                isRadio: false,
-                child: Column(
-                  children: [
-                    const Text(
-                      "High Goal",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                children: [
+                  const Text(
+                    "High",
+                    style: TextStyle(
+                      fontSize: 30,
                     ),
-                    const SizedBox(height: 20),
-                    Counter(
-                      label: "Scored",
-                      value: _highHits,
-                      onIncrease: (value) => setState(() => _highHits++),
-                      onDecrease: (value) => setState(() {
-                        if (_highHits > 0) _highHits--;
-                      }),
+                  ),
+                  const SizedBox(height: 10),
+                  Tile(
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 10),
+                        Counter(
+                          label: "Scored:",
+                          value: _highHits,
+                          onIncrease: () => setState(() => _highHits++),
+                          onDecrease: () => setState(() {
+                            if (_highHits > 0) _highHits--;
+                          }),
+                        ),
+                        const Divider(
+                          thickness: 2,
+                          indent: 10,
+                          endIndent: 10,
+                          height: 5,
+                        ),
+                        const SizedBox(height: 10),
+                        Counter(
+                          label: "Missed:",
+                          value: _highMisses,
+                          onIncrease: () => setState(() => _highMisses++),
+                          onDecrease: () => setState(() {
+                            if (_highMisses > 0) _highMisses--;
+                          }),
+                        ),
+                      ],
                     ),
-                    Counter(
-                      label: "Missed",
-                      value: _highMisses,
-                      onIncrease: (value) => setState(() => _highMisses++),
-                      onDecrease: (value) => setState(() {
-                        if (_highMisses > 0) _highMisses--;
-                      }),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          ]),
-        ],
-      ),
+          ],
+        ),
+      ],
     );
   }
 }

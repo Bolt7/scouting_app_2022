@@ -15,6 +15,8 @@ class _QRPageState extends State<QRPage> {
 
   Future _getData() async {
     final preferences = await SharedPreferences.getInstance();
+
+    // Create the csv with header and default values
     List<List> csvList = [
       [
         "Team",
@@ -37,9 +39,10 @@ class _QRPageState extends State<QRPage> {
         "Ranking Points",
         "Comments"
       ],
-      ["", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ""]
+      ["", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "", ""]
     ];
 
+    // Change the values to those stored in SharedPreferences.
     for (var key in csvList[0]) {
       if (preferences.get(key).toString() != "null") {
         final Object? value;
@@ -52,9 +55,15 @@ class _QRPageState extends State<QRPage> {
       }
       // print("$key: ${csvList[1][csvList[0].indexOf(key)]}");
     }
-    setState(() {
-      data = const ListToCsvConverter().convert(csvList);
-    });
+
+    // Add info page information to comments.
+    String info = "";
+    if (preferences.getBool("disabled") == true) info += "Disabled | ";
+    if (preferences.getBool("incap") == true) info += "Incapacitated | ";
+    if (preferences.getBool("late") == true) info += "Late | ";
+    csvList[1].last = info + csvList[1].last;
+
+    setState(() => data = const ListToCsvConverter().convert([csvList[1]]));
   }
 
   @override

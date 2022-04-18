@@ -2,21 +2,20 @@
 //https://stackoverflow.com/a/65271573
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-import '../utils/palette.dart';
+// import '../utils/palette.dart';
 
 class Counter extends StatelessWidget {
   final String label;
-  final double scaleFactor;
   final int value;
-  final ValueChanged<int> onIncrease;
-  final ValueChanged<int> onDecrease;
+  final VoidCallback onIncrease;
+  final VoidCallback onDecrease;
 
   const Counter({
     required this.onIncrease,
     required this.onDecrease,
     this.label = "",
-    this.scaleFactor = 1.0,
     this.value = 0,
     Key? key,
   }) : super(key: key);
@@ -26,49 +25,53 @@ class Counter extends StatelessWidget {
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            IconButton(
-              icon: Icon(
-                Icons.remove,
-                color: Palette.primaryColor,
+            Text(
+              label,
+              style: const TextStyle(
+                fontSize: 25,
               ),
-              iconSize: 32.0 * scaleFactor,
-              color: Palette.primaryColor,
-              onPressed: () {
-                onDecrease(value);
-              },
             ),
+            const SizedBox(width: 10),
             Text(
               '$value',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18.0 * scaleFactor,
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
+                fontSize: 30,
               ),
-            ),
-            IconButton(
-              icon: Icon(
-                Icons.add,
-                color: Palette.primaryColor,
-              ),
-              iconSize: 32.0 * scaleFactor,
-              color: Palette.primaryColor,
-              onPressed: () {
-                onIncrease(value);
-              },
             ),
           ],
         ),
-        Padding(
-          padding: EdgeInsets.only(bottom: 12 * scaleFactor),
-          child: Text(
-            label,
-            style: TextStyle(
-              fontSize: 18 * scaleFactor,
-              fontWeight: FontWeight.bold,
+        Row(
+          children: [
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  onDecrease();
+                  HapticFeedback.lightImpact();
+                  Feedback.forTap(context);
+                },
+                child: const Icon(
+                  Icons.remove_rounded,
+                  size: 60,
+                ),
+              ),
             ),
-          ),
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  onIncrease();
+                  HapticFeedback.lightImpact();
+                  Feedback.forTap(context);
+                },
+                child: const Icon(
+                  Icons.add_rounded,
+                  size: 60,
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );

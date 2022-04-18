@@ -1,39 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../utils/custom_radio_button.dart';
 import '../pages/qr_page.dart';
-import '../utils/palette.dart';
-import '../utils/style.dart';
-
-enum Station { r1, r2, r3, b1, b2, b3 }
+import '../utils/button.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final Function autoButtonFunction;
+
+  const HomePage({Key? key, required this.autoButtonFunction})
+      : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  final _teamNameController = TextEditingController();
-  final _scoutNameController = TextEditingController();
-  Station _station = Station.b1;
+  final _commentController = TextEditingController();
+  bool _disabled = false;
+  bool _incapacitated = false;
+  bool _late = false;
 
   Future _getData() async {
     final preferences = await SharedPreferences.getInstance();
     setState(() {
-      _teamNameController.text = preferences.getString("Team") ?? "";
-      _scoutNameController.text = preferences.getString("scoutName") ?? "";
-      _station = Station.values[preferences.getInt("station") ?? 0];
+      _disabled = preferences.getBool("disabled") ?? false;
+      _incapacitated = preferences.getBool("incap") ?? false;
+      _late = preferences.getBool("late") ?? false;
+      _commentController.text = preferences.getString("Comments") ?? "";
     });
   }
 
   Future _saveData() async {
     final preferences = await SharedPreferences.getInstance();
-    await preferences.setString("Team", _teamNameController.text);
-    await preferences.setString("scoutName", _scoutNameController.text);
-    await preferences.setInt("station", _station.index);
+    preferences.setBool("disabled", _disabled);
+    preferences.setBool("incap", _incapacitated);
+    preferences.setBool("late", _late);
+    preferences.setString("Comments", _commentController.text);
   }
 
   @override
@@ -50,134 +52,71 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: ListView(
-        children: [
-          const Center(
-            child: Text(
-              "Main",
-              style: Style.title,
+    return ListView(
+      scrollDirection: Axis.vertical,
+      // crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        CustomButton(
+          text: "Disabled",
+          value: _disabled,
+          onPressed: () => setState(() => _disabled = !_disabled),
+        ),
+        const SizedBox(height: 10),
+        CustomButton(
+          text: "Incapacitated",
+          value: _incapacitated,
+          onPressed: () => setState(() => _incapacitated = !_incapacitated),
+        ),
+        const SizedBox(height: 10),
+        CustomButton(
+          text: "Started Late",
+          value: _late,
+          onPressed: () => setState(() => _late = !_late),
+        ),
+        const SizedBox(height: 10),
+        TextField(
+          controller: _commentController,
+          decoration: const InputDecoration(labelText: "Comments"),
+        ),
+        const SizedBox(height: 10),
+        ElevatedButton(
+          style: ButtonStyle(
+            padding: MaterialStateProperty.resolveWith((state) {
+              return const EdgeInsets.symmetric(vertical: 10);
+            }),
+          ),
+          onPressed: () {
+            _saveData();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const QRPage()),
+            );
+          },
+          child: const Text(
+            "QR Code",
+            style: TextStyle(
+              fontSize: 30,
             ),
           ),
-          const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: TextField(
-              controller: _scoutNameController,
-              decoration: const InputDecoration(labelText: "Scout Name"),
+        ),
+        const SizedBox(height: 10),
+        ElevatedButton(
+          style: ButtonStyle(
+            padding: MaterialStateProperty.resolveWith((state) {
+              return const EdgeInsets.symmetric(vertical: 10);
+            }),
+          ),
+          onPressed: () {
+            widget.autoButtonFunction();
+          },
+          child: const Text(
+            "Start Auto",
+            style: TextStyle(
+              fontSize: 30,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: TextField(
-              controller: _teamNameController,
-              decoration: const InputDecoration(
-                labelText: "Team Number",
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
-          const Center(
-            child: Text(
-              "Station",
-              style: TextStyle(
-                fontSize: 22,
-              ),
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.all(10),
-            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 9),
-            decoration: BoxDecoration(
-              color: Palette.tileColor,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Column(
-              children: [
-                Row(children: [
-                  CustomRadioButton(
-                      text: "Red 1",
-                      groupValue: _station,
-                      value: Station.r1,
-                      onChanged: (Station value) {
-                        setState(() {
-                          _station = value;
-                        });
-                      }),
-                  CustomRadioButton(
-                      text: "Red 2",
-                      groupValue: _station,
-                      value: Station.r2,
-                      onChanged: (Station value) {
-                        setState(() {
-                          _station = value;
-                        });
-                      }),
-                  CustomRadioButton(
-                      text: "Red 3",
-                      groupValue: _station,
-                      value: Station.r3,
-                      onChanged: (Station value) {
-                        setState(() {
-                          _station = value;
-                        });
-                      }),
-                ]),
-                const SizedBox(height: 10),
-                Row(children: [
-                  CustomRadioButton(
-                      text: "Blue 1",
-                      groupValue: _station,
-                      value: Station.b1,
-                      onChanged: (Station value) {
-                        setState(() {
-                          _station = value;
-                        });
-                      }),
-                  CustomRadioButton(
-                      text: "Blue 2",
-                      groupValue: _station,
-                      value: Station.b2,
-                      onChanged: (Station value) {
-                        setState(() {
-                          _station = value;
-                        });
-                      }),
-                  CustomRadioButton(
-                      text: "Blue 3",
-                      groupValue: _station,
-                      value: Station.b3,
-                      onChanged: (Station value) {
-                        setState(() {
-                          _station = value;
-                        });
-                      }),
-                ]),
-              ],
-            ),
-          ),
-          const SizedBox(height: 30),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: ElevatedButton(
-              onPressed: () {
-                _saveData();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const QRPage()),
-                );
-              },
-              child: const Text(
-                "Generate QR Code",
-                style: TextStyle(
-                  fontSize: 20,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+        )
+      ],
     );
   }
 }

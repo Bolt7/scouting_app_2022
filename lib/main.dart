@@ -1,10 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../pages/auto_page.dart';
-import '../pages/info_page.dart';
 import '../pages/endgame_page.dart';
 import '../pages/home_page.dart';
 import '../pages/teleop_page.dart';
+import '../utils/appbar.dart';
 import '../utils/palette.dart';
 
 void main() {
@@ -35,30 +37,60 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // Page Navigation
+  bool _showTimer = false;
+  int _time = 0;
   int _selectedPage = 0;
-  static const List<Widget> _pages = <Widget>[
-    HomePage(),
-    AutoPage(),
-    TeleopPage(),
-    EndgamePage(),
-    CommentPage()
+
+  void _autoButtonFunction() async {
+    if (_showTimer) return;
+
+    // start of auto
+    setState(() {
+      _selectedPage = 1;
+      _showTimer = true;
+      _time = 15;
+    });
+
+    for (int i = 150; i > 0; i--) {
+      await Future.delayed(const Duration(seconds: 1));
+      setState(() {
+        if (i > 135) {
+          _time = i - 135;
+        } else if (i == 135) {
+          _time = 0;
+          _selectedPage = 2;
+        } else {
+          _time = i;
+        }
+      });
+    }
+
+    setState(() {
+      _selectedPage = 3;
+      _showTimer = false;
+    });
+  }
+
+  // Page Navigation
+  late final List<Widget> _pages = <Widget>[
+    HomePage(autoButtonFunction: _autoButtonFunction),
+    const AutoPage(),
+    const TeleopPage(),
+    const EndgamePage(),
   ];
   void _onNavigationItemTapped(int index) {
-    setState(() {
-      _selectedPage = index;
-    });
+    setState(() => _selectedPage = index);
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.title,
-          style: const TextStyle(color: Palette.primaryContrast),
-        ),
-      ),
+      appBar: const CustomAppBar(),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Palette.primaryColor,
         unselectedItemColor: Palette.inactiveButton,
@@ -83,13 +115,32 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: Icon(Icons.timer),
             label: "Endgame",
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            label: "Info",
-          ),
         ],
       ),
-      body: _pages[_selectedPage],
+      body: Padding(
+        padding: const EdgeInsets.all(15),
+        child: _pages[_selectedPage],
+      ),
+      floatingActionButton: _showTimer
+          ? Align(
+              alignment: const Alignment(1, -0.7),
+              child: FloatingActionButton(
+                onPressed: null,
+                child: FittedBox(
+                  fit: BoxFit.contain,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Text(
+                      "$_time",
+                      style: const TextStyle(
+                        fontSize: 100, // will be shrunk to size
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            )
+          : null,
     );
   }
 }
