@@ -59,8 +59,9 @@ class _TeleopPageState extends State<TeleopPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      scrollDirection: Axis.vertical,
+    return Flex(
+      direction: Axis.vertical,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         CustomButton(
           text: "Defensive",
@@ -68,13 +69,119 @@ class _TeleopPageState extends State<TeleopPage> {
           onPressed: () => setState(() => _defensive = !_defensive),
         ),
         const SizedBox(height: 10),
-        Tile(
-          child: IntrinsicHeight(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: const [
+            Text(
+              "Low",
+              style: TextStyle(
+                fontSize: 30,
+              ),
+            ),
+            Text(
+              "High",
+              style: TextStyle(
+                fontSize: 30,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Flexible(
+          flex: 2,
+          child: Row(
+            children: [
+              Expanded(
+                child: Tile(
+                  child: Flex(
+                    direction: Axis.vertical,
+                    children: [
+                      const SizedBox(height: 5),
+                      Flexible(
+                        fit: FlexFit.tight,
+                        child: Counter(
+                          label: "Scored:",
+                          value: _lowHits,
+                          onIncrease: () => setState(() => _lowHits++),
+                          onDecrease: () => setState(() {
+                            if (_lowHits > 0) _lowHits--;
+                          }),
+                        ),
+                      ),
+                      const Divider(
+                        thickness: 2,
+                        indent: 10,
+                        endIndent: 10,
+                        height: 0,
+                      ),
+                      const SizedBox(height: 5),
+                      Flexible(
+                        fit: FlexFit.tight,
+                        child: Counter(
+                          label: "Missed:",
+                          value: _lowMisses,
+                          onIncrease: () => setState(() => _lowMisses++),
+                          onDecrease: () => setState(() {
+                            if (_lowMisses > 0) _lowMisses--;
+                          }),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Tile(
+                  child: Flex(
+                    direction: Axis.vertical,
+                    children: [
+                      const SizedBox(height: 5),
+                      Flexible(
+                        fit: FlexFit.tight,
+                        child: Counter(
+                          label: "Scored:",
+                          value: _highHits,
+                          onIncrease: () => setState(() => _highHits++),
+                          onDecrease: () => setState(() {
+                            if (_highHits > 0) _highHits--;
+                          }),
+                        ),
+                      ),
+                      const Divider(
+                        thickness: 2,
+                        indent: 10,
+                        endIndent: 10,
+                        height: 0,
+                      ),
+                      const SizedBox(height: 5),
+                      Flexible(
+                        fit: FlexFit.tight,
+                        child: Counter(
+                          label: "Missed:",
+                          value: _highMisses,
+                          onIncrease: () => setState(() => _highMisses++),
+                          onDecrease: () => setState(() {
+                            if (_highMisses > 0) _highMisses--;
+                          }),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 10),
+        Flexible(
+          flex: 1,
+          child: Tile(
             child: Padding(
               padding: const EdgeInsets.only(top: 5),
               child: Row(
                 children: [
-                  Expanded(
+                  Flexible(
                     child: Counter(
                       label: "Fouls:",
                       value: _fouls,
@@ -90,7 +197,7 @@ class _TeleopPageState extends State<TeleopPage> {
                     indent: 5,
                     endIndent: 10,
                   ),
-                  Expanded(
+                  Flexible(
                     child: Counter(
                       label: "Tech Fouls:",
                       value: _techFouls,
@@ -104,98 +211,6 @@ class _TeleopPageState extends State<TeleopPage> {
               ),
             ),
           ),
-        ),
-        const SizedBox(height: 10),
-        Row(
-          children: [
-            Expanded(
-              child: Column(
-                children: [
-                  const Text(
-                    "Low",
-                    style: TextStyle(
-                      fontSize: 30,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Tile(
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 5),
-                        Counter(
-                          label: "Scored:",
-                          value: _lowHits,
-                          onIncrease: () => setState(() => _lowHits++),
-                          onDecrease: () => setState(() {
-                            if (_lowHits > 0) _lowHits--;
-                          }),
-                        ),
-                        const Divider(
-                          thickness: 2,
-                          indent: 10,
-                          endIndent: 10,
-                          height: 0,
-                        ),
-                        const SizedBox(height: 5),
-                        Counter(
-                          label: "Missed:",
-                          value: _lowMisses,
-                          onIncrease: () => setState(() => _lowMisses++),
-                          onDecrease: () => setState(() {
-                            if (_lowMisses > 0) _lowMisses--;
-                          }),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Column(
-                children: [
-                  const Text(
-                    "High",
-                    style: TextStyle(
-                      fontSize: 30,
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  Tile(
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 5),
-                        Counter(
-                          label: "Scored:",
-                          value: _highHits,
-                          onIncrease: () => setState(() => _highHits++),
-                          onDecrease: () => setState(() {
-                            if (_highHits > 0) _highHits--;
-                          }),
-                        ),
-                        const Divider(
-                          thickness: 2,
-                          indent: 10,
-                          endIndent: 10,
-                          height: 0,
-                        ),
-                        const SizedBox(height: 5),
-                        Counter(
-                          label: "Missed:",
-                          value: _highMisses,
-                          onIncrease: () => setState(() => _highMisses++),
-                          onDecrease: () => setState(() {
-                            if (_highMisses > 0) _highMisses--;
-                          }),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
         ),
       ],
     );

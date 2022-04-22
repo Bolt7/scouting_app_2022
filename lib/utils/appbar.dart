@@ -15,17 +15,17 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
-  final _teamNameController = TextEditingController();
+  final _teamNumberController = TextEditingController();
 
   Future _getData() async {
     final preferences = await SharedPreferences.getInstance();
     setState(
-        () => _teamNameController.text = preferences.getString("Team") ?? "");
+        () => _teamNumberController.text = preferences.getString("Team") ?? "");
   }
 
   Future _saveData() async {
     final preferences = await SharedPreferences.getInstance();
-    preferences.setString("Team", _teamNameController.text);
+    preferences.setString("Team", _teamNumberController.text);
   }
 
   @override
@@ -45,29 +45,34 @@ class _CustomAppBarState extends State<CustomAppBar> {
     return AppBar(
       title: Row(
         children: [
-          const Text(
-            "Team Number:",
-            style: TextStyle(
-              color: Palette.primaryContrast,
-              fontWeight: FontWeight.normal,
-              fontSize: 30,
+          const Baseline(
+            baseline: 25,
+            baselineType: TextBaseline.alphabetic,
+            child: Text(
+              "Team Number:",
+              style: TextStyle(
+                color: Palette.primaryContrast,
+                fontWeight: FontWeight.normal,
+                fontSize: 30,
+              ),
             ),
           ),
           const SizedBox(width: 10),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 13),
+          Baseline(
+            baseline: 60,
+            baselineType: TextBaseline.alphabetic,
+            child: SizedBox(
+              width: 70,
               child: TextField(
-                textAlignVertical: TextAlignVertical.bottom,
                 maxLength: 4,
                 keyboardType: TextInputType.number,
-                controller: _teamNameController,
-                onSubmitted: (_) async {
+                controller: _teamNumberController,
+                onChanged: (_) async {
                   final preferences = await SharedPreferences.getInstance();
-                  preferences.setString("Team", _teamNameController.text);
+                  preferences.setString("Team", _teamNumberController.text);
                 },
                 decoration: const InputDecoration(
-                  contentPadding: EdgeInsets.zero,
+                  // contentPadding: EdgeInsets.zero,
                   border: InputBorder.none,
                   hintText: "____",
                   hintStyle: TextStyle(
@@ -75,12 +80,26 @@ class _CustomAppBarState extends State<CustomAppBar> {
                     color: Palette.inactiveButton,
                   ),
                 ),
-                showCursor: false,
                 style: const TextStyle(
                   fontSize: 30,
                   color: Palette.primaryContrast,
                 ),
                 cursorColor: Palette.primaryContrast,
+              ),
+            ),
+          ),
+          Baseline(
+            baseline: 30,
+            baselineType: TextBaseline.ideographic,
+            child: GestureDetector(
+              onTap: () async {
+                setState(() => _teamNumberController.text = "");
+                final preferences = await SharedPreferences.getInstance();
+                preferences.setString("Team", "");
+              },
+              child: const Icon(
+                Icons.clear_rounded,
+                size: 32,
               ),
             ),
           ),

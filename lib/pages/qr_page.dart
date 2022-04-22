@@ -4,6 +4,8 @@ import "package:qr_flutter/qr_flutter.dart";
 import "package:shared_preferences/shared_preferences.dart";
 
 class QRPage extends StatefulWidget {
+  // final Function resetParentData;
+
   const QRPage({Key? key}) : super(key: key);
 
   @override
@@ -68,40 +70,38 @@ class _QRPageState extends State<QRPage> {
 
   @override
   void initState() {
-    super.initState();
     _getData();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: ListView(
-        scrollDirection: Axis.vertical,
-        children: [
-          QrImage(data: data),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 5,
-            ),
-            child: SelectableText(
-              data,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.grey,
-              ),
+    return ListView(
+      scrollDirection: Axis.vertical,
+      children: [
+        QrImage(data: data),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 5,
+          ),
+          child: SelectableText(
+            data,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Colors.grey,
             ),
           ),
-          TextButton(
-            child: const Text("Reset Data"),
-            onPressed: () {
-              // ignore: invalid_use_of_visible_for_testing_member
-              SharedPreferences.setMockInitialValues({});
-            },
-          )
-        ],
-      ),
+        ),
+        TextButton(
+          child: const Text("Reset Data"),
+          onPressed: () {
+            // ignore: invalid_use_of_visible_for_testing_member
+            SharedPreferences.setMockInitialValues({});
+            // widget.resetParentData;
+          },
+        )
+      ],
     );
   }
 }

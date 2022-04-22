@@ -53,8 +53,8 @@ class _AutoPageState extends State<AutoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      scrollDirection: Axis.vertical,
+    return Flex(
+      direction: Axis.vertical,
       children: [
         CustomButton(
           text: "Taxi",
@@ -63,22 +63,36 @@ class _AutoPageState extends State<AutoPage> {
         ),
         const SizedBox(height: 10),
         Row(
-          children: [
-            Expanded(
-              child: Column(
-                children: [
-                  const Text(
-                    "Low",
-                    style: TextStyle(
-                      fontSize: 30,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Tile(
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 10),
-                        Counter(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: const [
+            Text(
+              "Low",
+              style: TextStyle(
+                fontSize: 30,
+              ),
+            ),
+            Text(
+              "High",
+              style: TextStyle(
+                fontSize: 30,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Flexible(
+          flex: 2,
+          child: Row(
+            children: [
+              Expanded(
+                child: Tile(
+                  child: Flex(
+                    direction: Axis.vertical,
+                    children: [
+                      const SizedBox(height: 5),
+                      Flexible(
+                        fit: FlexFit.tight,
+                        child: Counter(
                           label: "Scored:",
                           value: _lowHits,
                           onIncrease: () => setState(() => _lowHits++),
@@ -86,14 +100,17 @@ class _AutoPageState extends State<AutoPage> {
                             if (_lowHits > 0) _lowHits--;
                           }),
                         ),
-                        const Divider(
-                          thickness: 2,
-                          indent: 10,
-                          endIndent: 10,
-                          height: 5,
-                        ),
-                        const SizedBox(height: 10),
-                        Counter(
+                      ),
+                      const Divider(
+                        thickness: 2,
+                        indent: 10,
+                        endIndent: 10,
+                        height: 0,
+                      ),
+                      const SizedBox(height: 5),
+                      Flexible(
+                        fit: FlexFit.tight,
+                        child: Counter(
                           label: "Missed:",
                           value: _lowMisses,
                           onIncrease: () => setState(() => _lowMisses++),
@@ -101,28 +118,21 @@ class _AutoPageState extends State<AutoPage> {
                             if (_lowMisses > 0) _lowMisses--;
                           }),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Column(
-                children: [
-                  const Text(
-                    "High",
-                    style: TextStyle(
-                      fontSize: 30,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Tile(
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 10),
-                        Counter(
+              const SizedBox(width: 10),
+              Expanded(
+                child: Tile(
+                  child: Flex(
+                    direction: Axis.vertical,
+                    children: [
+                      const SizedBox(height: 5),
+                      Flexible(
+                        fit: FlexFit.tight,
+                        child: Counter(
                           label: "Scored:",
                           value: _highHits,
                           onIncrease: () => setState(() => _highHits++),
@@ -130,14 +140,17 @@ class _AutoPageState extends State<AutoPage> {
                             if (_highHits > 0) _highHits--;
                           }),
                         ),
-                        const Divider(
-                          thickness: 2,
-                          indent: 10,
-                          endIndent: 10,
-                          height: 5,
-                        ),
-                        const SizedBox(height: 10),
-                        Counter(
+                      ),
+                      const Divider(
+                        thickness: 2,
+                        indent: 10,
+                        endIndent: 10,
+                        height: 0,
+                      ),
+                      const SizedBox(height: 5),
+                      Flexible(
+                        fit: FlexFit.tight,
+                        child: Counter(
                           label: "Missed:",
                           value: _highMisses,
                           onIncrease: () => setState(() => _highMisses++),
@@ -145,13 +158,13 @@ class _AutoPageState extends State<AutoPage> {
                             if (_highMisses > 0) _highMisses--;
                           }),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );

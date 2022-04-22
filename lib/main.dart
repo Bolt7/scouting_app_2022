@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:scouting_app_2022/pages/qr_page.dart';
 
 import '../pages/auto_page.dart';
 import '../pages/endgame_page.dart';
@@ -9,9 +10,7 @@ import '../pages/teleop_page.dart';
 import '../utils/appbar.dart';
 import '../utils/palette.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -19,18 +18,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Scouting App 2022",
-      theme: ThemeData(
-        primarySwatch: Palette.primaryColor,
-      ),
-      home: const MyHomePage(title: "Scouting App"),
+      theme: ThemeData(primarySwatch: Palette.primaryColor),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -42,17 +37,19 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedPage = 0;
 
   void _autoButtonFunction() async {
-    if (_showTimer) return;
+    if (_showTimer) {
+      setState(() => _showTimer = false);
+      return;
+    }
 
     // start of auto
     setState(() {
       _selectedPage = 1;
       _showTimer = true;
-      _time = 15;
     });
 
     for (int i = 150; i > 0; i--) {
-      await Future.delayed(const Duration(seconds: 1));
+      if (_showTimer == false) return;
       setState(() {
         if (i > 135) {
           _time = i - 135;
@@ -63,6 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
           _time = i;
         }
       });
+      await Future.delayed(const Duration(seconds: 1));
     }
 
     setState(() {
@@ -73,10 +71,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   // Page Navigation
   late final List<Widget> _pages = <Widget>[
-    HomePage(autoButtonFunction: _autoButtonFunction),
+    HomePage(
+      qrButtonFunction: () => setState(() => _selectedPage = 4),
+      autoButtonFunction: _autoButtonFunction,
+    ),
     const AutoPage(),
     const TeleopPage(),
     const EndgamePage(),
+    const QRPage(),
   ];
   void _onNavigationItemTapped(int index) {
     setState(() => _selectedPage = index);
@@ -90,13 +92,14 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: const CustomAppBar(),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Palette.primaryColor,
         unselectedItemColor: Palette.inactiveButton,
         fixedColor: Palette.primaryContrast,
         type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedPage,
+        currentIndex: _selectedPage % 4, // QR (4) shows first page on navbar
         onTap: _onNavigationItemTapped,
         items: const [
           BottomNavigationBarItem(

@@ -22,31 +22,36 @@ class Counter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Flex(
+      mainAxisAlignment: MainAxisAlignment.center,
+      direction: Axis.vertical,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              label,
-              style: const TextStyle(
-                fontSize: 25,
+        Flexible(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                label,
+                style: const TextStyle(
+                  fontSize: 25,
+                ),
               ),
-            ),
-            const SizedBox(width: 10),
-            Text(
-              '$value',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 30,
+              const SizedBox(width: 10),
+              Text(
+                '$value',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-        Row(
-          children: [
-            Expanded(
-              child: GestureDetector(
+        Flexible(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              GestureDetector(
                 onTap: () {
                   onDecrease();
                   HapticFeedback.lightImpact();
@@ -57,9 +62,7 @@ class Counter extends StatelessWidget {
                   size: 60,
                 ),
               ),
-            ),
-            Expanded(
-              child: GestureDetector(
+              GestureDetector(
                 onTap: () {
                   onIncrease();
                   HapticFeedback.lightImpact();
@@ -70,8 +73,8 @@ class Counter extends StatelessWidget {
                   size: 60,
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );

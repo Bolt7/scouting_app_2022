@@ -16,7 +16,6 @@ class EndgamePage extends StatefulWidget {
 class _EndgamePageState extends State<EndgamePage> {
   Rung _rung = Rung.none;
 
-  // Data Management
   Future _getData() async {
     final preferences = await SharedPreferences.getInstance();
     setState(() => _rung = Rung.values[preferences.getInt("rung") ?? 0]);
@@ -62,73 +61,60 @@ class _EndgamePageState extends State<EndgamePage> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      scrollDirection: Axis.vertical,
-      children: [
-        SizedBox(
-          height: MediaQuery.of(context).size.height - 150,
-          child: Tile(
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Flex(
-                direction: Axis.vertical,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Flexible(
-                    fit: FlexFit.tight,
-                    child: CustomButton(
-                      text: "None",
-                      value: Rung.none,
-                      groupValue: _rung,
-                      onPressed: () => setState(() => _rung = Rung.none),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Flexible(
-                    fit: FlexFit.tight,
-                    child: CustomButton(
-                      text: "Low",
-                      value: Rung.low,
-                      groupValue: _rung,
-                      onPressed: () => setState(() => _rung = Rung.low),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Flexible(
-                    fit: FlexFit.tight,
-                    child: CustomButton(
-                      text: "Mid",
-                      value: Rung.mid,
-                      groupValue: _rung,
-                      onPressed: () => setState(() => _rung = Rung.mid),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Flexible(
-                    fit: FlexFit.tight,
-                    child: CustomButton(
-                      text: "High",
-                      value: Rung.high,
-                      groupValue: _rung,
-                      onPressed: () => setState(() => _rung = Rung.high),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Flexible(
-                    fit: FlexFit.tight,
-                    child: CustomButton(
-                      text: "Traversal",
-                      value: Rung.traversal,
-                      groupValue: _rung,
-                      onPressed: () => setState(() => _rung = Rung.traversal),
-                    ),
-                  )
-                ],
+    return Tile(
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Flex(
+          direction: Axis.vertical,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Flexible(
+              child: CustomButton(
+                text: "None",
+                value: Rung.none,
+                groupValue: _rung,
+                onPressed: () => setState(() => _rung = Rung.none),
               ),
             ),
-          ),
-        )
-      ],
+            const SizedBox(height: 10),
+            Flexible(
+              child: CustomButton(
+                text: "Low",
+                value: Rung.low,
+                groupValue: _rung,
+                onPressed: () => setState(() => _rung = Rung.low),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Flexible(
+              child: CustomButton(
+                text: "Mid",
+                value: Rung.mid,
+                groupValue: _rung,
+                onPressed: () => setState(() => _rung = Rung.mid),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Flexible(
+              child: CustomButton(
+                text: "High",
+                value: Rung.high,
+                groupValue: _rung,
+                onPressed: () => setState(() => _rung = Rung.high),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Flexible(
+              child: CustomButton(
+                text: "Traversal",
+                value: Rung.traversal,
+                groupValue: _rung,
+                onPressed: () => setState(() => _rung = Rung.traversal),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

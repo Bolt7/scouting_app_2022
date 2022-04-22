@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../pages/qr_page.dart';
 import '../utils/button.dart';
 
 class HomePage extends StatefulWidget {
+  final Function qrButtonFunction;
   final Function autoButtonFunction;
 
-  const HomePage({Key? key, required this.autoButtonFunction})
-      : super(key: key);
+  const HomePage({
+    required this.qrButtonFunction,
+    required this.autoButtonFunction,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -54,7 +57,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return ListView(
       scrollDirection: Axis.vertical,
-      // crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         CustomButton(
           text: "Disabled",
@@ -85,13 +87,7 @@ class _HomePageState extends State<HomePage> {
               return const EdgeInsets.symmetric(vertical: 10);
             }),
           ),
-          onPressed: () {
-            _saveData();
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const QRPage()),
-            );
-          },
+          onPressed: () => widget.qrButtonFunction(),
           child: const Text(
             "QR Code",
             style: TextStyle(
@@ -110,7 +106,7 @@ class _HomePageState extends State<HomePage> {
             widget.autoButtonFunction();
           },
           child: const Text(
-            "Start Auto",
+            "Start/Stop Auto",
             style: TextStyle(
               fontSize: 30,
             ),
