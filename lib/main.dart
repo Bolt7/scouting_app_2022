@@ -34,36 +34,38 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   bool _showTimer = false;
   int _time = 0;
+  int _timers = 0;
   int _selectedPage = 0;
 
-  void _autoButtonFunction() async {
-    if (_showTimer) {
+  void _timer() async {
+    if (_timers > 0) {
       setState(() => _showTimer = false);
       return;
     }
 
     // start of auto
     setState(() {
+      _timers += 1;
       _selectedPage = 1;
       _showTimer = true;
     });
 
     for (int i = 150; i > 0; i--) {
-      if (_showTimer == false) return;
+      if (_showTimer == false || _timers > 1) {
+        setState(() {
+          _timers -= 1;
+        });
+        return;
+      }
       setState(() {
-        if (i > 135) {
-          _time = i - 135;
-        } else if (i == 135) {
-          _time = 0;
-          _selectedPage = 2;
-        } else {
-          _time = i;
-        }
+        _time = i % 135;
+        if (i == 135) _selectedPage = 2;
       });
       await Future.delayed(const Duration(seconds: 1));
     }
 
     setState(() {
+      _timers -= 1;
       _selectedPage = 3;
       _showTimer = false;
     });
@@ -73,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
   late final List<Widget> _pages = <Widget>[
     HomePage(
       qrButtonFunction: () => setState(() => _selectedPage = 4),
-      autoButtonFunction: _autoButtonFunction,
+      timer: _timer,
     ),
     const AutoPage(),
     const TeleopPage(),

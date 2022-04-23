@@ -5,11 +5,11 @@ import '../utils/button.dart';
 
 class HomePage extends StatefulWidget {
   final Function qrButtonFunction;
-  final Function autoButtonFunction;
+  final Function timer;
 
   const HomePage({
     required this.qrButtonFunction,
-    required this.autoButtonFunction,
+    required this.timer,
     Key? key,
   }) : super(key: key);
 
@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
             }),
           ),
           onPressed: () {
-            widget.autoButtonFunction();
+            widget.timer();
           },
           child: const Text(
             "Start/Stop Auto",

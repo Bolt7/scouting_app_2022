@@ -166,6 +166,11 @@ class _AutoPageState extends State<AutoPage> {
             ],
           ),
         ),
+        const SizedBox(height: 10),
+        const Flexible(
+          flex: 1,
+          child: SizedBox(),
+        ),
       ],
     );
   }
